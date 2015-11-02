@@ -1,2 +1,10 @@
 *.modulevalidation
 *.pcm
+*.strings-res
+*.xcactivitylog
+*.db
+*.
+*.nib
+assetcatalog_generated_info.plist
+*.mom
+*.dia

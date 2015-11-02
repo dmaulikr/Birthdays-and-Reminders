@@ -8,7 +8,6 @@
 
 #import "WSSyncEngine.h"
 #import <CoreData/CoreData.h>
-#import "WebServiceCoredataMapping-Bridging-Header.h"
 #import "SDCoreDataController.h"
 #import "WSParseAPIClient.h"
 #import "YZTransport.h"
@@ -212,17 +211,12 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
                 [self newManagedObjectWithClassName:@"Birthday" forRecord:record];
             }
         } else {
-        }
+            // Otherwise you need to do some more logic to determine if the record is new or has been updated.
 
-        //
-        // Once all NSManagedObjects are created in your context you can save the context to persist the objects
-        // to your persistent store. In this case though you used an NSManagedObjectContext who has a parent context
-        // so all changes will be pushed to the parent context
-        //
+        }
         
         [managedObjectContext performBlockAndWait:^{
-            NSError *error = nil;
-            BOOL success = [managedObjectContext save:&error];
+            BOOL success = [managedObjectContext save:nil];
             if (!success) {
                 NSLog(@"Unable to save context for class %@", className);
             }

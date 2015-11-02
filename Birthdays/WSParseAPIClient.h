@@ -11,7 +11,9 @@
 @interface WSParseAPIClient : NSObject
 
 + (WSParseAPIClient *)sharedClient;
+
 + (NSMutableDictionary<NSString *, NSString *> *)generateESHeader;
+
 - (NSMutableURLRequest *)GETRequestForAllRecordsOfClass:(NSString *)className updatedAfterDate:(NSDate *)updatedDate;
 
 @end

@@ -20,6 +20,7 @@
 		97DB39271BE74014003CE087 /* WSParseAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB39201BE74014003CE087 /* WSParseAPIClient.m */; settings = {ASSET_TAGS = (); }; };
 		97DB39281BE74014003CE087 /* WSSyncEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB39221BE74014003CE087 /* WSSyncEngine.m */; settings = {ASSET_TAGS = (); }; };
 		97DB39291BE74014003CE087 /* YZTransport.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB39241BE74014003CE087 /* YZTransport.m */; settings = {ASSET_TAGS = (); }; };
+		97DB392D1BE75247003CE087 /* MyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB392C1BE75247003CE087 /* MyTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,8 @@
 		97DB39221BE74014003CE087 /* WSSyncEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSSyncEngine.m; sourceTree = "<group>"; };
 		97DB39231BE74014003CE087 /* YZTransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZTransport.h; sourceTree = "<group>"; };
 		97DB39241BE74014003CE087 /* YZTransport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZTransport.m; sourceTree = "<group>"; };
+		97DB392B1BE75247003CE087 /* MyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTableViewCell.h; sourceTree = "<group>"; };
+		97DB392C1BE75247003CE087 /* MyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +93,8 @@
 				97DB39061BE738D9003CE087 /* Info.plist */,
 				97DB38F51BE738D9003CE087 /* Birthdays.xcdatamodeld */,
 				97DB38EF1BE738D9003CE087 /* Supporting Files */,
+				97DB392B1BE75247003CE087 /* MyTableViewCell.h */,
+				97DB392C1BE75247003CE087 /* MyTableViewCell.m */,
 			);
 			path = Birthdays;
 			sourceTree = "<group>";
@@ -97,8 +102,6 @@
 		97DB38EF1BE738D9003CE087 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				97DB391B1BE74014003CE087 /* Reachability.h */,
-				97DB391C1BE74014003CE087 /* Reachability.m */,
 				97DB391D1BE74014003CE087 /* SDCoreDataController.h */,
 				97DB391E1BE74014003CE087 /* SDCoreDataController.m */,
 				97DB391F1BE74014003CE087 /* WSParseAPIClient.h */,
@@ -108,8 +111,18 @@
 				97DB39231BE74014003CE087 /* YZTransport.h */,
 				97DB39241BE74014003CE087 /* YZTransport.m */,
 				97DB38F01BE738D9003CE087 /* main.m */,
+				97DB392A1BE74122003CE087 /* resources */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		97DB392A1BE74122003CE087 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				97DB391B1BE74014003CE087 /* Reachability.h */,
+				97DB391C1BE74014003CE087 /* Reachability.m */,
+			);
+			name = resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -182,6 +195,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97DB392D1BE75247003CE087 /* MyTableViewCell.m in Sources */,
 				97DB39291BE74014003CE087 /* YZTransport.m in Sources */,
 				97DB38FD1BE738D9003CE087 /* DetailViewController.m in Sources */,
 				97DB38FA1BE738D9003CE087 /* MasterViewController.m in Sources */,
