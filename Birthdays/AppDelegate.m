@@ -10,6 +10,8 @@
 #import "DetailViewController.h"
 #import "MasterViewController.h"
 #import "SDCoreDataController.h"
+#import "WSSyncEngine.h"
+#import "Birthday.h"
 
 @interface AppDelegate () <UISplitViewControllerDelegate>
 
@@ -20,6 +22,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [[WSSyncEngine sharedEngine] registerNSManagedObjectClassToSync:[Birthday class]];
     UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
     UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
     navigationController.topViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem;
@@ -27,7 +30,7 @@
 
     UINavigationController *masterNavigationController = splitViewController.viewControllers[0];
     MasterViewController *controller = (MasterViewController *)masterNavigationController.topViewController;
-    controller.managedObjectContext = [[SDCoreDataController sharedInstance] newManagedObjectContext];
+    controller.managedObjectContext = [[SDCoreDataController sharedInstance] masterManagedObjectContext];
     return YES;
 }
 
@@ -47,6 +50,8 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [[WSSyncEngine sharedEngine] startSync];
+
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

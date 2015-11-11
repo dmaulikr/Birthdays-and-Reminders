@@ -21,6 +21,9 @@
 		97DB39281BE74014003CE087 /* WSSyncEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB39221BE74014003CE087 /* WSSyncEngine.m */; settings = {ASSET_TAGS = (); }; };
 		97DB39291BE74014003CE087 /* YZTransport.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB39241BE74014003CE087 /* YZTransport.m */; settings = {ASSET_TAGS = (); }; };
 		97DB392D1BE75247003CE087 /* MyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB392C1BE75247003CE087 /* MyTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
+		97E3E2BD1BF3170A00998D5A /* Birthday+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 97E3E2BA1BF3170A00998D5A /* Birthday+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
+		97E3E2BE1BF3170A00998D5A /* Birthday.m in Sources */ = {isa = PBXBuildFile; fileRef = 97E3E2BC1BF3170A00998D5A /* Birthday.m */; settings = {ASSET_TAGS = (); }; };
+		97E3E2C21BF33E8E00998D5A /* AddNewItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97E3E2C11BF33E8E00998D5A /* AddNewItemViewController.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +52,12 @@
 		97DB39241BE74014003CE087 /* YZTransport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZTransport.m; sourceTree = "<group>"; };
 		97DB392B1BE75247003CE087 /* MyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTableViewCell.h; sourceTree = "<group>"; };
 		97DB392C1BE75247003CE087 /* MyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTableViewCell.m; sourceTree = "<group>"; };
+		97E3E2B91BF3170A00998D5A /* Birthday+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Birthday+CoreDataProperties.h"; sourceTree = "<group>"; };
+		97E3E2BA1BF3170A00998D5A /* Birthday+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Birthday+CoreDataProperties.m"; sourceTree = "<group>"; };
+		97E3E2BB1BF3170A00998D5A /* Birthday.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Birthday.h; sourceTree = "<group>"; };
+		97E3E2BC1BF3170A00998D5A /* Birthday.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Birthday.m; sourceTree = "<group>"; };
+		97E3E2C01BF33E8E00998D5A /* AddNewItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNewItemViewController.h; sourceTree = "<group>"; };
+		97E3E2C11BF33E8E00998D5A /* AddNewItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNewItemViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +74,10 @@
 		97DB38E31BE738D8003CE087 = {
 			isa = PBXGroup;
 			children = (
+				97E3E2B91BF3170A00998D5A /* Birthday+CoreDataProperties.h */,
+				97E3E2BA1BF3170A00998D5A /* Birthday+CoreDataProperties.m */,
+				97E3E2BB1BF3170A00998D5A /* Birthday.h */,
+				97E3E2BC1BF3170A00998D5A /* Birthday.m */,
 				97DB38EE1BE738D9003CE087 /* Birthdays */,
 				97DB38ED1BE738D9003CE087 /* Products */,
 			);
@@ -95,6 +108,8 @@
 				97DB38EF1BE738D9003CE087 /* Supporting Files */,
 				97DB392B1BE75247003CE087 /* MyTableViewCell.h */,
 				97DB392C1BE75247003CE087 /* MyTableViewCell.m */,
+				97E3E2C01BF33E8E00998D5A /* AddNewItemViewController.h */,
+				97E3E2C11BF33E8E00998D5A /* AddNewItemViewController.m */,
 			);
 			path = Birthdays;
 			sourceTree = "<group>";
@@ -197,6 +212,7 @@
 			files = (
 				97DB392D1BE75247003CE087 /* MyTableViewCell.m in Sources */,
 				97DB39291BE74014003CE087 /* YZTransport.m in Sources */,
+				97E3E2BD1BF3170A00998D5A /* Birthday+CoreDataProperties.m in Sources */,
 				97DB38FD1BE738D9003CE087 /* DetailViewController.m in Sources */,
 				97DB38FA1BE738D9003CE087 /* MasterViewController.m in Sources */,
 				97DB39261BE74014003CE087 /* SDCoreDataController.m in Sources */,
@@ -204,6 +220,8 @@
 				97DB38F41BE738D9003CE087 /* AppDelegate.m in Sources */,
 				97DB38F11BE738D9003CE087 /* main.m in Sources */,
 				97DB39251BE74014003CE087 /* Reachability.m in Sources */,
+				97E3E2C21BF33E8E00998D5A /* AddNewItemViewController.m in Sources */,
+				97E3E2BE1BF3170A00998D5A /* Birthday.m in Sources */,
 				97DB38F71BE738D9003CE087 /* Birthdays.xcdatamodeld in Sources */,
 				97DB39281BE74014003CE087 /* WSSyncEngine.m in Sources */,
 			);

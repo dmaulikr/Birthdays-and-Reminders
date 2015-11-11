@@ -133,28 +133,34 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
 
 - (void)setValue:(id)value forKey:(NSString *)key forManagedObject:(NSManagedObject *)managedObject {
     if ([key isEqualToString:@"createdAt"] || [key isEqualToString:@"updatedAt"]) {
-        NSDate *date = [self dateUsingStringFromAPI:value];
-        [managedObject setValue:date forKey:key];
+//        NSDate *date = [self dateUsingStringFromAPI:value];
+//        [managedObject setValue:date forKey:key];
     } else if ([value isKindOfClass:[NSDictionary class]]) {
-        if ([value objectForKey:@"__type"]) {
-            NSString *dataType = [value objectForKey:@"__type"];
-            if ([dataType isEqualToString:@"Date"]) {
-                NSString *dateString = [value objectForKey:@"iso"];
-                NSDate *date = [self dateUsingStringFromAPI:dateString];
-                [managedObject setValue:date forKey:key];
-            } else if ([dataType isEqualToString:@"File"]) {
-                NSString *urlString = [value objectForKey:@"url"];
-                NSURL *url = [NSURL URLWithString:urlString];
-                NSURLRequest *request = [NSURLRequest requestWithURL:url];
-                NSURLResponse *response = nil;
-                NSError *error = nil;
-                NSData *dataResponse = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-                [managedObject setValue:dataResponse forKey:key];
-            } else {
-                NSLog(@"Unknown Data Type Received");
-                [managedObject setValue:nil forKey:key];
-            }
-        }
+//        if ([value objectForKey:@"__type"]) {
+//            NSString *dataType = [value objectForKey:@"__type"];
+//            if ([dataType isEqualToString:@"Date"]) {
+//                NSString *dateString = [value objectForKey:@"iso"];
+//                NSDate *date = [self dateUsingStringFromAPI:dateString];
+//                [managedObject setValue:date forKey:key];
+//            } else if ([dataType isEqualToString:@"File"]) {
+//                NSString *urlString = [value objectForKey:@"url"];
+//                NSURL *url = [NSURL URLWithString:urlString];
+//                NSURLRequest *request = [NSURLRequest requestWithURL:url];
+//                NSURLResponse *response = nil;
+//                NSError *error = nil;
+//                NSData *dataResponse = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+//                [managedObject setValue:dataResponse forKey:key];
+//            } else {
+//                NSLog(@"Unknown Data Type Received");
+//                [managedObject setValue:nil forKey:key];
+//            }
+//        }
+    } else if ([key isEqualToString:@"updatedAt"] || [key isEqualToString:@"createdAt"] || [key isEqualToString:@"image"] || [key isEqualToString:@"date"] || [key isEqualToString:@"objectId"]) {
+
+
+    } else if ([key isEqualToString:@"giftIdeas"]) {
+        [managedObject setValue:value forKey:@"birthday"];
+        
     } else {
         [managedObject setValue:value forKey:key];
     }

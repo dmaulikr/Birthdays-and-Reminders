@@ -8,3 +8,10 @@
 assetcatalog_generated_info.plist
 *.mom
 *.dia
+*.xcbkptlist
+*.xcfind
+VersionInfo.plist
+*.omo
+DerivedData/Birthdays/Index/Debug/iphonesimulator9.0-x86_64/Birthdays.xcindex
+PkgInfo
+DerivedData
