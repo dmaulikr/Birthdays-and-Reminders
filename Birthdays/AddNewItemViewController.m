@@ -8,6 +8,8 @@
 
 #import "AddNewItemViewController.h"
 #import "SDCoreDataController.h"
+#import "WSParseAPIClient.h"
+#import "YZTransport.h"
 
 @interface AddNewItemViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *name;
@@ -58,59 +60,24 @@
 
 - (void)postRequest
 {
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
     NSDictionary * jsonData = @{@"name":self.name.text, @"facebook": self.facebook.text, @"giftIdeas": self.birthday.text};
-    NSURLRequest * urlRequest = [self createRequestWithDictionary:jsonData];
+    NSMutableURLRequest * urlRequest = [[WSParseAPIClient sharedClient] POSTRequestForClass:@"Birthday" parameters:jsonData];
+    urlRequest.allHTTPHeaderFields = [WSParseAPIClient generateESHeader];
     
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-        NSInteger responseStatusCode = httpResponse.statusCode;
-        
-        if (error == nil && (responseStatusCode >= 200 && responseStatusCode <= 299)) {
+    YZTransport * transport = [[YZTransport alloc] init];
+    [transport retrieve:urlRequest completionBlock:^(BOOL success, YZTransportResponseObject *responseObject) {
+       
+        if (success) {
             
-            NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            NSData *jsonData = [dataString dataUsingEncoding:NSUTF8StringEncoding];
-            NSError *error = nil;
-            NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
-            NSLog(@"%@",responseDictionary);
         } else {
-            
+            NSLog(@"%@",responseObject.error);
         }
+        
     }];
-    [dataTask resume];
-    [session finishTasksAndInvalidate];
 }
 
 #pragma mark private
 
-- (NSMutableURLRequest *)createRequestWithDictionary:(NSDictionary*)parameters
-{
-    NSString * urlstr = @"https://api.parse.com/1/classes/Birthday";
-    NSURL *url = [NSURL URLWithString:urlstr];
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
-    request.HTTPMethod = @"POST";
-    NSError * error = nil;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:&error];
-    if (error) {
-        NSLog(@"%@",error);
-    }
-    [request setHTTPBody:jsonData];
-    NSDictionary * headers = [self generateHeader];
-    request.allHTTPHeaderFields = headers;
-    return request;
-}
-
-
-- (NSMutableDictionary<NSString *, NSString *> *)generateHeader
-{
-    NSMutableDictionary<NSString *, NSString *> *headers = [NSMutableDictionary dictionary];
-    [headers setValue:@"RplMa0mTwS9oIldaaG3kvJbnqqMUIU4PZmv9UlEb" forKey:@"X-Parse-REST-API-Key"];
-    [headers setValue:@"ZXZJQAqUyVrq1HJel5DoOHquqxw1jqbfMumRQdib" forKey:@"X-Parse-Application-Id"];
-    [headers setValue:@"application/json" forKey:@"Content-Type"];
-    return headers;
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

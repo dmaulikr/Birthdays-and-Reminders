@@ -45,6 +45,22 @@ static NSString * const kSDFParseAPIKey = @"RplMa0mTwS9oIldaaG3kvJbnqqMUIU4PZmv9
     return request;
 }
 
+- (NSMutableURLRequest *)POSTRequestForClass:(NSString *)className parameters:(NSDictionary *)parameters {
+
+    NSString * urlstr = @"https://api.parse.com/1/classes/Birthday";
+    NSURL *url = [NSURL URLWithString:urlstr];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+    request.HTTPMethod = @"POST";
+    NSError * error = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:&error];
+    if (error) {
+        NSLog(@"%@",error);
+    }
+    [request setHTTPBody:jsonData];
+    return request;
+}
+
+
 static NSString * AFPropertyListStringFromParameters(NSDictionary *parameters) {
     NSString *propertyListString = nil;
     NSError *error = nil;
