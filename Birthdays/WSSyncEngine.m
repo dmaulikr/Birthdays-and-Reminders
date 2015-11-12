@@ -155,7 +155,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
 //                [managedObject setValue:nil forKey:key];
 //            }
 //        }
-    } else if ([key isEqualToString:@"updatedAt"] || [key isEqualToString:@"createdAt"] || [key isEqualToString:@"image"] || [key isEqualToString:@"date"] || [key isEqualToString:@"objectId"]) {
+    } else if ([key isEqualToString:@"updatedAt"] || [key isEqualToString:@"createdAt"] || [key isEqualToString:@"image"] || [key isEqualToString:@"date"]) {
 
 
     } else if ([key isEqualToString:@"giftIdeas"]) {
@@ -217,10 +217,41 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
                 [self newManagedObjectWithClassName:@"Birthday" forRecord:record];
             }
         } else {
+            //
             // Otherwise you need to do some more logic to determine if the record is new or has been updated.
+            // First get the downloaded records from the JSON response, verify there is at least one object in
+            // the data, and then fetch all records stored in Core Data whose objectId matches those from the JSON response.
+            //
+            NSArray *downloadedRecords = [self JSONDataRecordsForClass:className sortedByKey:@"objectId"];
+            
+            NSSortDescriptor *sortByName = [NSSortDescriptor sortDescriptorWithKey:@"objectId"
+                                                                         ascending:YES];
+            NSArray *sortDescriptors = [NSArray arrayWithObject:sortByName];
+            NSArray *sortedArray = [downloadedRecords sortedArrayUsingDescriptors:sortDescriptors];
+            NSLog(@"%@",sortedArray);
 
+            if ([downloadedRecords lastObject]) {
+
+                NSArray *storedRecords = [self managedObjectsForClass:className sortedByKey:@"objectId" usingArrayOfIds:[downloadedRecords valueForKey:@"objectId"] inArrayOfIds:YES];
+                int currentIndex = 0;
+                
+                for (NSDictionary *record in downloadedRecords) {
+                    NSManagedObject *storedManagedObject = nil;
+                    
+                    // Make sure we don't access an index that is out of bounds as we are iterating over both collections together
+                    if ([storedRecords count] > currentIndex) {
+                        storedManagedObject = [storedRecords objectAtIndex:currentIndex];
+                    }
+                    
+                    if ([[storedManagedObject valueForKey:@"objectId"] isEqualToString:[record valueForKey:@"objectId"]]) {
+                        [self updateManagedObject:[storedRecords objectAtIndex:currentIndex] withRecord:record];
+                        currentIndex++;
+                    } else {
+                        [self newManagedObjectWithClassName:className forRecord:record];
+                    }
+                }
+            }
         }
-        
         [managedObjectContext performBlockAndWait:^{
             BOOL success = [managedObjectContext save:nil];
             if (!success) {
