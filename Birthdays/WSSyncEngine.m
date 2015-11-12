@@ -200,6 +200,19 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
     return results;
 }
 
+- (NSArray *)allManagedObjectsForClass:(NSString *)className {
+    __block NSArray *results = nil;
+    NSManagedObjectContext *managedObjectContext = [[SDCoreDataController sharedInstance] backgroundManagedObjectContext];
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Birthday"];
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:
+                                      [NSSortDescriptor sortDescriptorWithKey:@"objectId" ascending:YES]]];
+    [managedObjectContext performBlockAndWait:^{
+        NSError *error = nil;
+        results = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    }];
+    return results;
+}
+
 - (void)processJSONDataRecordsIntoCoreData {
     NSManagedObjectContext *managedObjectContext = [[SDCoreDataController sharedInstance] backgroundManagedObjectContext];
     //
@@ -252,6 +265,22 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
                 }
             }
         }
+        
+        NSArray *downloadedRecords = [self JSONDataRecordsForClass:className sortedByKey:@"objectId"];
+        NSArray<NSManagedObject*> * objectsMarkedForDeletion = [NSArray array];
+        objectsMarkedForDeletion = [self managedObjectsForClass:@"Birthday" sortedByKey:@"objectId" usingArrayOfIds:[downloadedRecords valueForKey:@"objectId"] inArrayOfIds:NO];
+        
+        for (NSManagedObject * itemToBeDeleted in objectsMarkedForDeletion) {
+            [managedObjectContext performBlockAndWait:^{
+                NSManagedObject * object =[managedObjectContext existingObjectWithID:itemToBeDeleted.objectID error:nil];
+                if (object) {
+                    [managedObjectContext deleteObject:object];
+                } else {
+                    NSLog(@"Failed to retrieve object from core data that needs to be deleted, This would result in bad data");
+                }
+            }];
+        }
+        
         [managedObjectContext performBlockAndWait:^{
             BOOL success = [managedObjectContext save:nil];
             if (!success) {

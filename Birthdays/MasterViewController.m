@@ -10,8 +10,11 @@
 #import "DetailViewController.h"
 #import "SDCoreDataController.h"
 #import "AddNewItemViewController.h"
+#import "WSSyncEngine.h"
 
 @interface MasterViewController ()
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *refreshButton;
+@property (strong, nonatomic) UIActivityIndicatorView *spinner;
 
 @end
 
@@ -20,7 +23,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewItem:)];
     self.navigationItem.rightBarButtonItem = addButton;
@@ -33,6 +35,57 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSaveDataNotification:) name:@"SDSyncEngineSyncCompleted" object:nil];
 
     [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self checkSyncStatus];
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"SDSyncEngineSyncCompleted" object:nil queue:nil usingBlock:^(NSNotification *note) {
+//        [self loadRecordsFromCoreData];
+        [self.tableView reloadData];
+    }];
+    [[WSSyncEngine sharedEngine] addObserver:self forKeyPath:@"syncInProgress" options:NSKeyValueObservingOptionNew context:nil];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"SDSyncEngineSyncCompleted" object:nil];
+    [[WSSyncEngine sharedEngine] removeObserver:self forKeyPath:@"syncInProgress"];
+}
+
+
+- (IBAction)refreshPressed:(id)sender {
+    [[WSSyncEngine sharedEngine] startSync];
+}
+
+- (void)checkSyncStatus {
+    if ([[WSSyncEngine sharedEngine] syncInProgress]) {
+        [self replaceRefreshButtonWithActivityIndicator];
+    } else {
+        [self removeActivityIndicatorFromRefreshButton];
+    }
+}
+
+- (void)replaceRefreshButtonWithActivityIndicator {
+    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(10, 10, 25, 25)];
+    [activityIndicator setColor:[UIColor redColor]];
+    [activityIndicator setAutoresizingMask:(UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin)];
+    [activityIndicator startAnimating];
+    UIBarButtonItem *activityItem = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
+    self.navigationItem.leftBarButtonItem = activityItem;
+}
+
+- (void)removeActivityIndicatorFromRefreshButton {
+    self.navigationItem.leftBarButtonItem = self.refreshButton;
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"syncInProgress"]) {
+        [self checkSyncStatus];
+    }
 }
 
 - (void)handleSaveDataNotification:(NSNotification*)notification {
