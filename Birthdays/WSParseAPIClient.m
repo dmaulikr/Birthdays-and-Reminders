@@ -92,4 +92,14 @@ static NSString * AFPropertyListStringFromParameters(NSDictionary *parameters) {
     return request;
 }
 
+- (NSMutableURLRequest *)DELETERequestForClass:(NSString *)className objectID:(NSString *)objectIdToDelete {
+    
+    NSString * urlstr = @"https://api.parse.com/1/classes/Birthday/";
+    urlstr = [urlstr stringByAppendingString:objectIdToDelete];
+    NSURL *url = [NSURL URLWithString:urlstr];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+    request.HTTPMethod = @"DELETE";
+    return request;
+}
+
 @end
