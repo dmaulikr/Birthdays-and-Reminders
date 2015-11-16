@@ -12,12 +12,6 @@
 #import "WSParseAPIClient.h"
 #import "YZTransport.h"
 
-typedef enum {
-    SDObjectSynced = 0,
-    SDObjectCreated,
-    SDObjectDeleted,
-} SDObjectSyncStatus;
-
 
 NSString * const kSDSyncEngineInitialCompleteKey = @"SDSyncEngineInitialSyncCompleted";
 NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSyncCompleted";
@@ -53,6 +47,8 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
             [self downloadDataForRegisteredObjects:YES];
         });
     }
+//    NSArray * arr =  [self managedObjectsForClass:@"Birthday" withSyncStatus:SDObjectSynced];
+//    NSLog(@"%@",arr);
 }
 
 - (BOOL)initialSyncComplete {
@@ -302,6 +298,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
 - (void)downloadDataForRegisteredObjects:(BOOL)useUpdatedAtDate {
     
     for (NSString *className in self.registeredClassesToSync) {
+        // 1. get all changes from server
         NSDate *mostRecentUpdatedDate = nil;
         if (useUpdatedAtDate) {
             mostRecentUpdatedDate = [self mostRecentUpdatedAtDateForEntityWithName:className];
@@ -332,7 +329,62 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
                 
             }
         }];
+        
+        // 2. post local changes to server
+        //      a. post all locally created objects
+        [self postLocalChangesToServerForClass:className];
+        
+        //      b. delete locally deleted objects on server
     }
+}
+
+- (void)postLocalChangesToServerForClass:(NSString*)className
+{
+    NSArray * newlyCreatedObjects = [self managedObjectsForClass:className withSyncStatus:SDObjectCreated];
+    NSManagedObjectContext * moc = [[SDCoreDataController sharedInstance] masterManagedObjectContext];
+
+    for (NSManagedObject * object in newlyCreatedObjects) {
+        NSMutableDictionary * jsonObject = [self jsonForManagedObject:object];
+        NSMutableURLRequest * urlRequest = [[WSParseAPIClient sharedClient] POSTRequestForClass:@"Birthday" parameters:jsonObject];
+        urlRequest.allHTTPHeaderFields = [WSParseAPIClient generateESHeader];
+
+        YZTransport * transport = [[YZTransport alloc] init];
+        [transport retrieve:urlRequest completionBlock:^(BOOL success, YZTransportResponseObject *responseObject) {
+            
+            if (success) {
+                NSString *dataString = [[NSString alloc] initWithData:responseObject.data encoding:NSUTF8StringEncoding];
+                NSData *jsonData = [dataString dataUsingEncoding:NSUTF8StringEncoding];
+                NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:nil];
+
+                // set the SDSyncStatus and objectID
+                [moc performBlockAndWait:^{
+                    [object setValue:[NSNumber numberWithInt:SDObjectSynced] forKey:@"syncStatus"];
+                    [object setValue:responseDictionary[@"objectId"] forKey:@"objectId"];
+                }];
+                
+                if (object == [newlyCreatedObjects lastObject]) {
+                    [[SDCoreDataController sharedInstance] saveBackgroundContext];
+                    BOOL success = [moc save:nil];
+                    if (!success) {
+                        NSLog(@"Unable to save context for class ");
+                    }
+                }
+
+            } else {
+                NSLog(@"Failed to create object on server, Error : %@",responseObject.error);
+            }
+            
+        }];
+    }
+}
+
+
+-(NSMutableDictionary*)jsonForManagedObject:(NSManagedObject*)object {
+    NSMutableDictionary * jsonDict = [[NSMutableDictionary alloc] init];
+    jsonDict[@"name"]       = [[object valueForKey:@"name"] description];
+    jsonDict[@"facebook"]   = [[object valueForKey:@"facebook"] description];
+    jsonDict[@"giftIdeas"]   = [[object valueForKey:@"birthday"] description];
+    return jsonDict;
 }
 
 - (void)initializeDateFormatter {

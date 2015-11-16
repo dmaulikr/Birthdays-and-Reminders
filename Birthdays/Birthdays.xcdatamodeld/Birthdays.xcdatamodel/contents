@@ -5,12 +5,13 @@
         <attribute name="facebook" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="syncStatus" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="timeStamp" optional="YES" attributeType="Date">
             <userInfo/>
         </attribute>
         <userInfo/>
     </entity>
     <elements>
-        <element name="Birthday" positionX="261" positionY="189" width="128" height="120"/>
+        <element name="Birthday" positionX="261" positionY="189" width="128" height="135"/>
     </elements>
 </model>

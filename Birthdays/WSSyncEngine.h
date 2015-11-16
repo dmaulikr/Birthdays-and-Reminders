@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum {
+    SDObjectSynced = 0,
+    SDObjectCreated,
+    SDObjectDeleted,
+} SDObjectSyncStatus;
+
+
 @interface WSSyncEngine : NSObject
 @property (atomic, readonly) BOOL syncInProgress;
 

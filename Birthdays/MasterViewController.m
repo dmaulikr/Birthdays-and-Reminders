@@ -45,7 +45,6 @@
     [self checkSyncStatus];
     
     [[NSNotificationCenter defaultCenter] addObserverForName:@"SDSyncEngineSyncCompleted" object:nil queue:nil usingBlock:^(NSNotification *note) {
-//        [self loadRecordsFromCoreData];
         [self.tableView reloadData];
     }];
     [[WSSyncEngine sharedEngine] addObserver:self forKeyPath:@"syncInProgress" options:NSKeyValueObservingOptionNew context:nil];
@@ -226,6 +225,9 @@
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:NO];
 
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
+    
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"syncStatus != %d", SDObjectDeleted]];
+
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
