@@ -301,7 +301,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
         // 1. get all changes from server
         NSDate *mostRecentUpdatedDate = nil;
         if (useUpdatedAtDate) {
-            mostRecentUpdatedDate = [self mostRecentUpdatedAtDateForEntityWithName:className];
+            //mostRecentUpdatedDate = [self mostRecentUpdatedAtDateForEntityWithName:className];
         }
     
         NSDictionary *headerDict = [WSParseAPIClient generateESHeader];
@@ -335,6 +335,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
         [self postLocalChangesToServerForClass:className];
         
         //      b. delete locally deleted objects on server
+        [self deleteObjectsOnServerForClass:className];
     }
 }
 
@@ -378,12 +379,41 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
     }
 }
 
+- (void)deleteObjectsOnServerForClass:(NSString*)className
+{
+    NSArray * objectsToDelete = [self managedObjectsForClass:className withSyncStatus:SDObjectDeleted];
+    NSManagedObjectContext * moc = [[SDCoreDataController sharedInstance] backgroundManagedObjectContext];
+    
+    for (NSManagedObject * object in objectsToDelete) {
+        
+        NSString * objectId = [[object valueForKey:@"objectId"] description];
+        NSMutableURLRequest * urlRequest = [[WSParseAPIClient sharedClient] DELETERequestForClass:@"Birthday" objectID:objectId];
+        urlRequest.allHTTPHeaderFields = [WSParseAPIClient generateESHeader];
+        
+        YZTransport * transport = [[YZTransport alloc] init];
+        [transport retrieve:urlRequest completionBlock:^(BOOL success, YZTransportResponseObject *responseObject) {
+            
+            if (success) {
+                // set the SDSyncStatus and objectID
+                [moc deleteObject:object];
+                
+                if (object == [objectsToDelete lastObject]) {
+                    [[SDCoreDataController sharedInstance] saveBackgroundContext];
+                }
+                
+            } else {
+                NSLog(@"Failed to create object on server, Error : %@",responseObject.error);
+            }
+            
+        }];
+    }
+}
 
 -(NSMutableDictionary*)jsonForManagedObject:(NSManagedObject*)object {
     NSMutableDictionary * jsonDict = [[NSMutableDictionary alloc] init];
     jsonDict[@"name"]       = [[object valueForKey:@"name"] description];
     jsonDict[@"facebook"]   = [[object valueForKey:@"facebook"] description];
-    jsonDict[@"giftIdeas"]   = [[object valueForKey:@"birthday"] description];
+    jsonDict[@"giftIdeas"]  = [[object valueForKey:@"birthday"] description];
     return jsonDict;
 }
 

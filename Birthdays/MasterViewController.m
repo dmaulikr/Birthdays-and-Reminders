@@ -166,9 +166,12 @@
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
         NSManagedObject *objectTODelete = [self.fetchedResultsController objectAtIndexPath:indexPath];
         NSString *objectIdToDeleteOnServer =[[objectTODelete valueForKey:@"objectId"] description];
-
-        [context deleteObject:objectTODelete];
-            
+        
+        if (objectIdToDeleteOnServer == nil || [objectIdToDeleteOnServer  isEqual: @""]) {
+            [context deleteObject:objectTODelete];
+        } else {
+            [objectTODelete setValue:[NSNumber numberWithInt:SDObjectDeleted] forKey:@"syncStatus"];
+        }
         NSError *error = nil;
         if (![context save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
@@ -176,26 +179,11 @@
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            [self deleteRequest:objectIdToDeleteOnServer];
-        });
     }
 }
 
-- (void)deleteRequest:(NSString*)objectID
-{
-    NSMutableURLRequest * urlRequest = [[WSParseAPIClient sharedClient] DELETERequestForClass:@"Birthday" objectID:objectID];
-    urlRequest.allHTTPHeaderFields = [WSParseAPIClient generateESHeader];
-    
-    YZTransport * transport = [[YZTransport alloc] init];
-    [transport retrieve:urlRequest completionBlock:^(BOOL success, YZTransportResponseObject *responseObject) {
-        
-        if (success) {
-            NSLog(@"object delete sucessfully on server%@",responseObject.error);
-        } else {
-            NSLog(@"Failed to delete Object on server %@",responseObject.error);
-        }
-    }];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"");
 }
 
 - (void)configureCell:(MyTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
