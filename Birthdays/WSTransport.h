@@ -1,9 +1,9 @@
 //
 //  YZTransport.h
-//  NookStudy
 //
-//  Created by Mike Ma on 1/12/15.
-//  Copyright (c) 2015 Barnes & Noble. All rights reserved.
+//
+//  Created by Irfan Lone on 1/12/15.
+//  Copyright (c) 2015 Irfan. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

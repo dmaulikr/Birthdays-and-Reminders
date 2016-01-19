@@ -1,17 +1,14 @@
 //
 //  YZTransport.m
-//  NookStudy
+//  
 //
-//  Created by Mike Ma on 1/12/15.
-//  Copyright (c) 2015 Barnes & Noble. All rights reserved.
+//  Created by Irfan Lone on 1/12/15.
+//  Copyright (c) 2015 Irfan. All rights reserved.
 //
 
 #import "WSTransport.h"
 #import "Reachability.h"
 
-const NSInteger kYZErrorRentalExpired = 40006;
-const NSInteger kYZErrorDRMDeviceLimitReached = 40007;
-const NSInteger kYZErrorPasswordConflictForAccounts = 10020;
 
 @implementation YZTransportResponseObject
 

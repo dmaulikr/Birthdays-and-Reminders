@@ -71,6 +71,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9748F34D1C4DD800008C9724 /* Non UI Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				97DB391D1BE74014003CE087 /* WSCoreDataController.h */,
+				97DB391E1BE74014003CE087 /* WSCoreDataController.m */,
+				97DB391F1BE74014003CE087 /* WSParseAPIClient.h */,
+				97DB39201BE74014003CE087 /* WSParseAPIClient.m */,
+				97DB39211BE74014003CE087 /* WSSyncEngine.h */,
+				97DB39221BE74014003CE087 /* WSSyncEngine.m */,
+				97DB39231BE74014003CE087 /* WSTransport.h */,
+				97DB39241BE74014003CE087 /* WSTransport.m */,
+			);
+			name = "Non UI Controllers";
+			sourceTree = "<group>";
+		};
 		97DB38E31BE738D8003CE087 = {
 			isa = PBXGroup;
 			children = (
@@ -94,6 +109,7 @@
 		97DB38EE1BE738D9003CE087 /* Birthdays */ = {
 			isa = PBXGroup;
 			children = (
+				9748F34D1C4DD800008C9724 /* Non UI Controllers */,
 				97DB38F21BE738D9003CE087 /* AppDelegate.h */,
 				97DB38F31BE738D9003CE087 /* AppDelegate.m */,
 				97DB38F81BE738D9003CE087 /* MasterViewController.h */,
@@ -101,15 +117,15 @@
 				97DB38FB1BE738D9003CE087 /* DetailViewController.h */,
 				97DB38FC1BE738D9003CE087 /* DetailViewController.m */,
 				97DB38FE1BE738D9003CE087 /* Main.storyboard */,
+				97DB392B1BE75247003CE087 /* MyTableViewCell.h */,
+				97DB392C1BE75247003CE087 /* MyTableViewCell.m */,
+				97E3E2C01BF33E8E00998D5A /* AddNewItemViewController.h */,
+				97E3E2C11BF33E8E00998D5A /* AddNewItemViewController.m */,
 				97DB39011BE738D9003CE087 /* Assets.xcassets */,
 				97DB39031BE738D9003CE087 /* LaunchScreen.storyboard */,
 				97DB39061BE738D9003CE087 /* Info.plist */,
 				97DB38F51BE738D9003CE087 /* Birthdays.xcdatamodeld */,
 				97DB38EF1BE738D9003CE087 /* Supporting Files */,
-				97DB392B1BE75247003CE087 /* MyTableViewCell.h */,
-				97DB392C1BE75247003CE087 /* MyTableViewCell.m */,
-				97E3E2C01BF33E8E00998D5A /* AddNewItemViewController.h */,
-				97E3E2C11BF33E8E00998D5A /* AddNewItemViewController.m */,
 			);
 			path = Birthdays;
 			sourceTree = "<group>";
@@ -117,14 +133,6 @@
 		97DB38EF1BE738D9003CE087 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				97DB391D1BE74014003CE087 /* WSCoreDataController.h */,
-				97DB391E1BE74014003CE087 /* WSCoreDataController.m */,
-				97DB391F1BE74014003CE087 /* WSParseAPIClient.h */,
-				97DB39201BE74014003CE087 /* WSParseAPIClient.m */,
-				97DB39211BE74014003CE087 /* WSSyncEngine.h */,
-				97DB39221BE74014003CE087 /* WSSyncEngine.m */,
-				97DB39231BE74014003CE087 /* WSTransport.h */,
-				97DB39241BE74014003CE087 /* WSTransport.m */,
 				97DB38F01BE738D9003CE087 /* main.m */,
 				97DB392A1BE74122003CE087 /* resources */,
 			);
@@ -337,7 +345,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Birthdays/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.barnesandnoble.chalkonenterprise.Birthdays;
+				PRODUCT_BUNDLE_IDENTIFIER = com.IrfanPrograms.enterprise.Birthdays;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -348,7 +356,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Birthdays/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.barnesandnoble.chalkonenterprise.Birthdays;
+				PRODUCT_BUNDLE_IDENTIFIER = com.IrfanPrograms.enterprise.Birthdays;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

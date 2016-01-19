@@ -163,7 +163,7 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSManagedObjectContext *moc = [[SDCoreDataController sharedInstance] backgroundManagedObjectContext];
+        NSManagedObjectContext *moc = [[WSCoreDataController sharedInstance] backgroundManagedObjectContext];
         NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
         NSManagedObject *objectTODelete =[moc existingObjectWithID:object.objectID error:nil];
         NSString *objectIdToDeleteOnServer =[[objectTODelete valueForKey:@"objectId"] description];

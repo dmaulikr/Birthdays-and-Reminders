@@ -30,7 +30,7 @@
 
     UINavigationController *masterNavigationController = splitViewController.viewControllers[0];
     MasterViewController *controller = (MasterViewController *)masterNavigationController.topViewController;
-    controller.managedObjectContext = [[SDCoreDataController sharedInstance] masterManagedObjectContext];
+    controller.managedObjectContext = [[WSCoreDataController sharedInstance] masterManagedObjectContext];
     return YES;
 }
 
@@ -77,7 +77,7 @@
 //@synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 //
 //- (NSURL *)applicationDocumentsDirectory {
-//    // The directory the application uses to store the Core Data store file. This code uses a directory named "com.barnesandnoble.chalkonenterprise.Birthdays" in the application's documents directory.
+//    // The directory the application uses to store the Core Data store file. This code uses a directory named "" in the application's documents directory.
 //    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 //}
 //
