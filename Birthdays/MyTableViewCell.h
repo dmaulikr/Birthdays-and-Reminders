@@ -3,7 +3,7 @@
 //  Birthdays
 //
 //  Created by Irfan Lone on 11/2/15.
-//  Copyright © 2015 Yuzu. All rights reserved.
+//  Copyright © 2015 Irfan. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
