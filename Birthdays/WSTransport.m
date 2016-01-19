@@ -51,7 +51,6 @@
                                                               completionBlock(NO, responseObject);
                                                           }
                                                       }];
-//TODO: XCode 7 will not compile Mac Unit Tests if this is present. Investigate again with later builds.
 #ifdef NSURLSessionTaskPriorityHigh
     uploadTask.priority = NSURLSessionTaskPriorityHigh;
 #endif
@@ -80,7 +79,6 @@
                                                         completionBlock(NO, responseObject);
                                                     }
                                                 }];
-//TODO: XCode 7 will not compile Mac Unit Tests if this is present. Investigate again with later builds.
 #ifdef NSURLSessionTaskPriorityHigh
     dataTask.priority = NSURLSessionTaskPriorityHigh;
 #endif
