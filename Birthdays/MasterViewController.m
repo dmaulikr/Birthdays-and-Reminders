@@ -8,11 +8,11 @@
 
 #import "MasterViewController.h"
 #import "DetailViewController.h"
-#import "SDCoreDataController.h"
+#import "WSCoreDataController.h"
 #import "AddNewItemViewController.h"
 #import "WSSyncEngine.h"
 #import "WSParseAPIClient.h"
-#import "YZTransport.h"
+#import "WSTransport.h"
 
 @interface MasterViewController ()
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *refreshButton;

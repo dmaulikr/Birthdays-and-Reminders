@@ -9,9 +9,6 @@
 #import <Foundation/Foundation.h>
 
 //TODO: convert to YZErrorEnumFactoryMacros
-extern const NSInteger kYZErrorRentalExpired;
-extern const NSInteger kYZErrorDRMDeviceLimitReached;
-extern const NSInteger kYZErrorPasswordConflictForAccounts;
 
 @interface YZTransportResponseObject : NSObject
 @property (strong, nonatomic) NSData *data;
@@ -22,7 +19,7 @@ extern const NSInteger kYZErrorPasswordConflictForAccounts;
 - (instancetype)initWithData:(NSData *)data response:(NSHTTPURLResponse *)response error:(NSError *)error NS_DESIGNATED_INITIALIZER;
 @end
 
-@interface YZTransport : NSObject
+@interface WSTransport : NSObject
 
 - (void)send:(NSData *)dataToUpload urlRequest:(NSURLRequest *)urlRequest completionBlock:(void (^)(BOOL success, YZTransportResponseObject *responseObject))completionBlock;
 

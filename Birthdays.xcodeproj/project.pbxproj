@@ -15,15 +15,15 @@
 		97DB39001BE738D9003CE087 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97DB38FE1BE738D9003CE087 /* Main.storyboard */; };
 		97DB39021BE738D9003CE087 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97DB39011BE738D9003CE087 /* Assets.xcassets */; };
 		97DB39051BE738D9003CE087 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97DB39031BE738D9003CE087 /* LaunchScreen.storyboard */; };
-		97DB39251BE74014003CE087 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB391C1BE74014003CE087 /* Reachability.m */; settings = {ASSET_TAGS = (); }; };
-		97DB39261BE74014003CE087 /* SDCoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB391E1BE74014003CE087 /* SDCoreDataController.m */; settings = {ASSET_TAGS = (); }; };
-		97DB39271BE74014003CE087 /* WSParseAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB39201BE74014003CE087 /* WSParseAPIClient.m */; settings = {ASSET_TAGS = (); }; };
-		97DB39281BE74014003CE087 /* WSSyncEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB39221BE74014003CE087 /* WSSyncEngine.m */; settings = {ASSET_TAGS = (); }; };
-		97DB39291BE74014003CE087 /* YZTransport.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB39241BE74014003CE087 /* YZTransport.m */; settings = {ASSET_TAGS = (); }; };
-		97DB392D1BE75247003CE087 /* MyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB392C1BE75247003CE087 /* MyTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
-		97E3E2BD1BF3170A00998D5A /* Birthday+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 97E3E2BA1BF3170A00998D5A /* Birthday+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
-		97E3E2BE1BF3170A00998D5A /* Birthday.m in Sources */ = {isa = PBXBuildFile; fileRef = 97E3E2BC1BF3170A00998D5A /* Birthday.m */; settings = {ASSET_TAGS = (); }; };
-		97E3E2C21BF33E8E00998D5A /* AddNewItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97E3E2C11BF33E8E00998D5A /* AddNewItemViewController.m */; settings = {ASSET_TAGS = (); }; };
+		97DB39251BE74014003CE087 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB391C1BE74014003CE087 /* Reachability.m */; };
+		97DB39261BE74014003CE087 /* WSCoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB391E1BE74014003CE087 /* WSCoreDataController.m */; };
+		97DB39271BE74014003CE087 /* WSParseAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB39201BE74014003CE087 /* WSParseAPIClient.m */; };
+		97DB39281BE74014003CE087 /* WSSyncEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB39221BE74014003CE087 /* WSSyncEngine.m */; };
+		97DB39291BE74014003CE087 /* WSTransport.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB39241BE74014003CE087 /* WSTransport.m */; };
+		97DB392D1BE75247003CE087 /* MyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB392C1BE75247003CE087 /* MyTableViewCell.m */; };
+		97E3E2BD1BF3170A00998D5A /* Birthday+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 97E3E2BA1BF3170A00998D5A /* Birthday+CoreDataProperties.m */; };
+		97E3E2BE1BF3170A00998D5A /* Birthday.m in Sources */ = {isa = PBXBuildFile; fileRef = 97E3E2BC1BF3170A00998D5A /* Birthday.m */; };
+		97E3E2C21BF33E8E00998D5A /* AddNewItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97E3E2C11BF33E8E00998D5A /* AddNewItemViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,14 +42,14 @@
 		97DB39061BE738D9003CE087 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97DB391B1BE74014003CE087 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		97DB391C1BE74014003CE087 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
-		97DB391D1BE74014003CE087 /* SDCoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDCoreDataController.h; sourceTree = "<group>"; };
-		97DB391E1BE74014003CE087 /* SDCoreDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDCoreDataController.m; sourceTree = "<group>"; };
+		97DB391D1BE74014003CE087 /* WSCoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSCoreDataController.h; sourceTree = "<group>"; };
+		97DB391E1BE74014003CE087 /* WSCoreDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSCoreDataController.m; sourceTree = "<group>"; };
 		97DB391F1BE74014003CE087 /* WSParseAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSParseAPIClient.h; sourceTree = "<group>"; };
 		97DB39201BE74014003CE087 /* WSParseAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSParseAPIClient.m; sourceTree = "<group>"; };
 		97DB39211BE74014003CE087 /* WSSyncEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSSyncEngine.h; sourceTree = "<group>"; };
 		97DB39221BE74014003CE087 /* WSSyncEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSSyncEngine.m; sourceTree = "<group>"; };
-		97DB39231BE74014003CE087 /* YZTransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZTransport.h; sourceTree = "<group>"; };
-		97DB39241BE74014003CE087 /* YZTransport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZTransport.m; sourceTree = "<group>"; };
+		97DB39231BE74014003CE087 /* WSTransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSTransport.h; sourceTree = "<group>"; };
+		97DB39241BE74014003CE087 /* WSTransport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSTransport.m; sourceTree = "<group>"; };
 		97DB392B1BE75247003CE087 /* MyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTableViewCell.h; sourceTree = "<group>"; };
 		97DB392C1BE75247003CE087 /* MyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTableViewCell.m; sourceTree = "<group>"; };
 		97E3E2B91BF3170A00998D5A /* Birthday+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Birthday+CoreDataProperties.h"; sourceTree = "<group>"; };
@@ -117,14 +117,14 @@
 		97DB38EF1BE738D9003CE087 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				97DB391D1BE74014003CE087 /* SDCoreDataController.h */,
-				97DB391E1BE74014003CE087 /* SDCoreDataController.m */,
+				97DB391D1BE74014003CE087 /* WSCoreDataController.h */,
+				97DB391E1BE74014003CE087 /* WSCoreDataController.m */,
 				97DB391F1BE74014003CE087 /* WSParseAPIClient.h */,
 				97DB39201BE74014003CE087 /* WSParseAPIClient.m */,
 				97DB39211BE74014003CE087 /* WSSyncEngine.h */,
 				97DB39221BE74014003CE087 /* WSSyncEngine.m */,
-				97DB39231BE74014003CE087 /* YZTransport.h */,
-				97DB39241BE74014003CE087 /* YZTransport.m */,
+				97DB39231BE74014003CE087 /* WSTransport.h */,
+				97DB39241BE74014003CE087 /* WSTransport.m */,
 				97DB38F01BE738D9003CE087 /* main.m */,
 				97DB392A1BE74122003CE087 /* resources */,
 			);
@@ -211,11 +211,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				97DB392D1BE75247003CE087 /* MyTableViewCell.m in Sources */,
-				97DB39291BE74014003CE087 /* YZTransport.m in Sources */,
+				97DB39291BE74014003CE087 /* WSTransport.m in Sources */,
 				97E3E2BD1BF3170A00998D5A /* Birthday+CoreDataProperties.m in Sources */,
 				97DB38FD1BE738D9003CE087 /* DetailViewController.m in Sources */,
 				97DB38FA1BE738D9003CE087 /* MasterViewController.m in Sources */,
-				97DB39261BE74014003CE087 /* SDCoreDataController.m in Sources */,
+				97DB39261BE74014003CE087 /* WSCoreDataController.m in Sources */,
 				97DB39271BE74014003CE087 /* WSParseAPIClient.m in Sources */,
 				97DB38F41BE738D9003CE087 /* AppDelegate.m in Sources */,
 				97DB38F11BE738D9003CE087 /* main.m in Sources */,

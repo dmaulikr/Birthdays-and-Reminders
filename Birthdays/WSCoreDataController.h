@@ -9,7 +9,7 @@
 #import <CoreData/CoreData.h>
 
 
-@interface SDCoreDataController : NSObject
+@interface WSCoreDataController : NSObject
 
 + (id)sharedInstance;
 

@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Barnes & Noble. All rights reserved.
 //
 
-#import "YZTransport.h"
+#import "WSTransport.h"
 #import "Reachability.h"
 
 const NSInteger kYZErrorRentalExpired = 40006;
@@ -28,7 +28,7 @@ const NSInteger kYZErrorPasswordConflictForAccounts = 10020;
 @end
 
 
-@implementation YZTransport
+@implementation WSTransport
 
 - (void)send:(NSData *)dataToUpload urlRequest:(NSURLRequest *)urlRequest completionBlock:(void (^)(BOOL success, YZTransportResponseObject *responseObject))completionBlock
 {

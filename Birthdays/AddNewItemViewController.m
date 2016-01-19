@@ -7,9 +7,9 @@
 //
 
 #import "AddNewItemViewController.h"
-#import "SDCoreDataController.h"
+#import "WSCoreDataController.h"
 #import "WSParseAPIClient.h"
-#import "YZTransport.h"
+#import "WSTransport.h"
 #import "WSSyncEngine.h"
 
 @interface AddNewItemViewController ()
@@ -34,7 +34,7 @@
         return;
     }
     
-    NSManagedObjectContext *moc = [[SDCoreDataController sharedInstance] newManagedObjectContext];
+    NSManagedObjectContext *moc = [[WSCoreDataController sharedInstance] newManagedObjectContext];
     NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"Birthday" inManagedObjectContext:moc];
     [newManagedObject setValue:self.facebook.text forKey:@"facebook"];
     [newManagedObject setValue:self.birthday.text forKey:@"birthday"];
@@ -48,7 +48,7 @@
             NSLog(@"Unable to save context for class ");
         }
     }];
-    [[SDCoreDataController sharedInstance] saveMasterContext];
+    [[WSCoreDataController sharedInstance] saveMasterContext];
     [self dismissViewControllerAnimated:YES completion:^{
 //        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
 //            [self postRequest];

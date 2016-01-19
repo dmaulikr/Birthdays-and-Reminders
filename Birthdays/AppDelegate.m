@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "DetailViewController.h"
 #import "MasterViewController.h"
-#import "SDCoreDataController.h"
+#import "WSCoreDataController.h"
 #import "WSSyncEngine.h"
 #import "Birthday.h"
 

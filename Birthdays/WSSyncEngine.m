@@ -8,9 +8,9 @@
 
 #import "WSSyncEngine.h"
 #import <CoreData/CoreData.h>
-#import "SDCoreDataController.h"
+#import "WSCoreDataController.h"
 #import "WSParseAPIClient.h"
-#import "YZTransport.h"
+#import "WSTransport.h"
 
 
 NSString * const kSDSyncEngineInitialCompleteKey = @"SDSyncEngineInitialSyncCompleted";
@@ -99,9 +99,9 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
     // You are only interested in 1 result so limit the request to 1
     //
     [request setFetchLimit:1];
-    [[[SDCoreDataController sharedInstance] backgroundManagedObjectContext] performBlockAndWait:^{
+    [[[WSCoreDataController sharedInstance] backgroundManagedObjectContext] performBlockAndWait:^{
         NSError *error = nil;
-        NSArray *results = [[[SDCoreDataController sharedInstance] backgroundManagedObjectContext] executeFetchRequest:request error:&error];
+        NSArray *results = [[[WSCoreDataController sharedInstance] backgroundManagedObjectContext] executeFetchRequest:request error:&error];
         if ([results lastObject])   {
             //
             // Set date to the fetched result
@@ -114,7 +114,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
 }
 
 - (void)newManagedObjectWithClassName:(NSString *)className forRecord:(NSDictionary *)record {
-    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"Birthday" inManagedObjectContext:[[SDCoreDataController sharedInstance] backgroundManagedObjectContext]];
+    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"Birthday" inManagedObjectContext:[[WSCoreDataController sharedInstance] backgroundManagedObjectContext]];
     [record enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         [self setValue:obj forKey:key forManagedObject:newManagedObject];
     }];
@@ -164,7 +164,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
 
 - (NSArray *)managedObjectsForClass:(NSString *)className withSyncStatus:(SDObjectSyncStatus)syncStatus {
     __block NSArray *results = nil;
-    NSManagedObjectContext *managedObjectContext = [[SDCoreDataController sharedInstance] backgroundManagedObjectContext];
+    NSManagedObjectContext *managedObjectContext = [[WSCoreDataController sharedInstance] backgroundManagedObjectContext];
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Birthday"];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"syncStatus = %d", syncStatus];
     [fetchRequest setPredicate:predicate];
@@ -177,7 +177,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
 
 - (NSArray *)managedObjectsForClass:(NSString *)className sortedByKey:(NSString *)key usingArrayOfIds:(NSArray *)idArray inArrayOfIds:(BOOL)inIds withSyncStatus:(SDObjectSyncStatus)syncStatus {
     __block NSArray *results = nil;
-    NSManagedObjectContext *managedObjectContext = [[SDCoreDataController sharedInstance] backgroundManagedObjectContext];
+    NSManagedObjectContext *managedObjectContext = [[WSCoreDataController sharedInstance] backgroundManagedObjectContext];
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Birthday"];
     NSPredicate *predicate01;
     NSPredicate *predicate02;
@@ -200,7 +200,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
 
 - (NSArray *)managedObjectsForClass:(NSString *)className sortedByKey:(NSString *)key usingArrayOfIds:(NSArray *)idArray inArrayOfIds:(BOOL)inIds {
     __block NSArray *results = nil;
-    NSManagedObjectContext *managedObjectContext = [[SDCoreDataController sharedInstance] backgroundManagedObjectContext];
+    NSManagedObjectContext *managedObjectContext = [[WSCoreDataController sharedInstance] backgroundManagedObjectContext];
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Birthday"];
     NSPredicate *predicate;
     if (inIds) {
@@ -221,7 +221,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
 
 - (NSArray *)allManagedObjectsForClass:(NSString *)className {
     __block NSArray *results = nil;
-    NSManagedObjectContext *managedObjectContext = [[SDCoreDataController sharedInstance] backgroundManagedObjectContext];
+    NSManagedObjectContext *managedObjectContext = [[WSCoreDataController sharedInstance] backgroundManagedObjectContext];
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Birthday"];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:
                                       [NSSortDescriptor sortDescriptorWithKey:@"objectId" ascending:YES]]];
@@ -233,7 +233,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
 }
 
 - (void)processJSONDataRecordsIntoCoreDataWithCompletionBlock:(void(^)())completion {
-    NSManagedObjectContext *managedObjectContext = [[SDCoreDataController sharedInstance] backgroundManagedObjectContext];
+    NSManagedObjectContext *managedObjectContext = [[WSCoreDataController sharedInstance] backgroundManagedObjectContext];
     //
     // Iterate over all registered classes to sync
     //
@@ -306,7 +306,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
                 NSLog(@"Unable to save context for class %@", className);
             }
         }];
-        [[SDCoreDataController sharedInstance] saveMasterContext];
+        [[WSCoreDataController sharedInstance] saveMasterContext];
 
         //
         // You are now done with the downloaded JSON responses so you can delete them to clean up after yourself,
@@ -330,7 +330,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
         NSDictionary *headerDict = [WSParseAPIClient generateESHeader];
         NSMutableURLRequest *urlRequest = [[WSParseAPIClient sharedClient] GETRequestForAllRecordsOfClass:@"Birthday" updatedAfterDate:mostRecentUpdatedDate];
         urlRequest.allHTTPHeaderFields = headerDict;
-        YZTransport *transport = [[YZTransport alloc] init];
+        WSTransport *transport = [[WSTransport alloc] init];
         [transport retrieve:urlRequest completionBlock:^(BOOL success, YZTransportResponseObject *responseObject) {
             if (success) {
                 NSString *dataString = [[NSString alloc] initWithData:responseObject.data encoding:NSUTF8StringEncoding];
@@ -373,7 +373,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
 - (void)postLocalChangesToServerForClass:(NSString*)className withCompletionBlock:(void(^)())completion
 {
     NSArray * newlyCreatedObjects = [self managedObjectsForClass:className withSyncStatus:SDObjectCreated];
-    NSManagedObjectContext * moc = [[SDCoreDataController sharedInstance] masterManagedObjectContext];
+    NSManagedObjectContext * moc = [[WSCoreDataController sharedInstance] masterManagedObjectContext];
     
     if ([newlyCreatedObjects count] < 1) {
         completion();
@@ -383,7 +383,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
         NSMutableURLRequest * urlRequest = [[WSParseAPIClient sharedClient] POSTRequestForClass:@"Birthday" parameters:jsonObject];
         urlRequest.allHTTPHeaderFields = [WSParseAPIClient generateESHeader];
 
-        YZTransport * transport = [[YZTransport alloc] init];
+        WSTransport * transport = [[WSTransport alloc] init];
         [transport retrieve:urlRequest completionBlock:^(BOOL success, YZTransportResponseObject *responseObject) {
             
             if (success) {
@@ -398,7 +398,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
                 }];
                 
                 if (object == [newlyCreatedObjects lastObject]) {
-                    [[SDCoreDataController sharedInstance] saveBackgroundContext];
+                    [[WSCoreDataController sharedInstance] saveBackgroundContext];
                     BOOL success = [moc save:nil];
                     if (!success) {
                         NSLog(@"Unable to save context for class ");
@@ -415,7 +415,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
 - (void)deleteObjectsOnServerForClass:(NSString*)className withCompletionBlock:(void(^)())completion
 {
     NSArray * objectsToDelete = [self managedObjectsForClass:className withSyncStatus:SDObjectDeleted];
-    NSManagedObjectContext * moc = [[SDCoreDataController sharedInstance] backgroundManagedObjectContext];
+    NSManagedObjectContext * moc = [[WSCoreDataController sharedInstance] backgroundManagedObjectContext];
     if ([objectsToDelete count] < 1) {
         completion();
     }
@@ -425,7 +425,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
         NSMutableURLRequest * urlRequest = [[WSParseAPIClient sharedClient] DELETERequestForClass:@"Birthday" objectID:objectId];
         urlRequest.allHTTPHeaderFields = [WSParseAPIClient generateESHeader];
         
-        YZTransport * transport = [[YZTransport alloc] init];
+        WSTransport * transport = [[WSTransport alloc] init];
         [transport retrieve:urlRequest completionBlock:^(BOOL success, YZTransportResponseObject *responseObject) {
             
             if (success) {
@@ -433,7 +433,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
                 [moc deleteObject:object];
                 
                 if (object == [objectsToDelete lastObject]) {
-                    [[SDCoreDataController sharedInstance] saveBackgroundContext];
+                    [[WSCoreDataController sharedInstance] saveBackgroundContext];
                 }
             } else {
                 NSLog(@"Failed to create object on server, Error : %@",responseObject.error);

@@ -5,9 +5,9 @@
 //  Created by Chris Wagner on 5/14/12.
 //
 
-#import "SDCoreDataController.h"
+#import "WSCoreDataController.h"
 
-@interface SDCoreDataController ()
+@interface WSCoreDataController ()
 
 @property (strong, nonatomic) NSManagedObjectContext *masterManagedObjectContext;
 @property (strong, nonatomic) NSManagedObjectContext *backgroundManagedObjectContext;
@@ -16,7 +16,7 @@
 
 @end
 
-@implementation SDCoreDataController
+@implementation WSCoreDataController
 
 @synthesize masterManagedObjectContext = _masterManagedObjectContext;
 @synthesize backgroundManagedObjectContext = _backgroundManagedObjectContext;
@@ -25,7 +25,7 @@
 
 + (id)sharedInstance {
     static dispatch_once_t once;
-    static SDCoreDataController *sharedInstance;
+    static WSCoreDataController *sharedInstance;
     dispatch_once(&once, ^{
         sharedInstance = [[self alloc] init];
     });
