@@ -163,17 +163,18 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        NSManagedObject *objectTODelete = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        NSManagedObjectContext *moc = [[SDCoreDataController sharedInstance] backgroundManagedObjectContext];
+        NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        NSManagedObject *objectTODelete =[moc existingObjectWithID:object.objectID error:nil];
         NSString *objectIdToDeleteOnServer =[[objectTODelete valueForKey:@"objectId"] description];
-        
+
         if (objectIdToDeleteOnServer == nil || [objectIdToDeleteOnServer  isEqual: @""]) {
-            [context deleteObject:objectTODelete];
+            [moc deleteObject:objectTODelete];
         } else {
             [objectTODelete setValue:[NSNumber numberWithInt:SDObjectDeleted] forKey:@"syncStatus"];
         }
         NSError *error = nil;
-        if (![context save:&error]) {
+        if (![moc save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);

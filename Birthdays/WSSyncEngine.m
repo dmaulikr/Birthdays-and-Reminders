@@ -175,6 +175,29 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
     return results;
 }
 
+- (NSArray *)managedObjectsForClass:(NSString *)className sortedByKey:(NSString *)key usingArrayOfIds:(NSArray *)idArray inArrayOfIds:(BOOL)inIds withSyncStatus:(SDObjectSyncStatus)syncStatus {
+    __block NSArray *results = nil;
+    NSManagedObjectContext *managedObjectContext = [[SDCoreDataController sharedInstance] backgroundManagedObjectContext];
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Birthday"];
+    NSPredicate *predicate01;
+    NSPredicate *predicate02;
+    if (inIds) {
+        predicate01 = [NSPredicate predicateWithFormat:@"objectId IN %@", idArray];
+    } else {
+        predicate01 = [NSPredicate predicateWithFormat:@"NOT (objectId IN %@)", idArray];
+    }
+    predicate02 = [NSPredicate predicateWithFormat:@"syncStatus = %d", syncStatus];
+    NSPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates: @[predicate01, predicate02]];
+    [fetchRequest setPredicate:predicate];
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:
+                                      [NSSortDescriptor sortDescriptorWithKey:@"objectId" ascending:YES]]];
+    [managedObjectContext performBlockAndWait:^{
+        NSError *error = nil;
+        results = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    }];
+    return results;
+}
+
 - (NSArray *)managedObjectsForClass:(NSString *)className sortedByKey:(NSString *)key usingArrayOfIds:(NSArray *)idArray inArrayOfIds:(BOOL)inIds {
     __block NSArray *results = nil;
     NSManagedObjectContext *managedObjectContext = [[SDCoreDataController sharedInstance] backgroundManagedObjectContext];
@@ -185,7 +208,6 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
     } else {
         predicate = [NSPredicate predicateWithFormat:@"NOT (objectId IN %@)", idArray];
     }
-    
     [fetchRequest setPredicate:predicate];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:
                                       [NSSortDescriptor sortDescriptorWithKey:@"objectId" ascending:YES]]];
@@ -195,6 +217,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
     }];
     return results;
 }
+
 
 - (NSArray *)allManagedObjectsForClass:(NSString *)className {
     __block NSArray *results = nil;
@@ -209,7 +232,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
     return results;
 }
 
-- (void)processJSONDataRecordsIntoCoreData {
+- (void)processJSONDataRecordsIntoCoreDataWithCompletionBlock:(void(^)())completion {
     NSManagedObjectContext *managedObjectContext = [[SDCoreDataController sharedInstance] backgroundManagedObjectContext];
     //
     // Iterate over all registered classes to sync
@@ -264,7 +287,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
         
         NSArray *downloadedRecords = [self JSONDataRecordsForClass:className sortedByKey:@"objectId"];
         NSArray<NSManagedObject*> * objectsMarkedForDeletion = [NSArray array];
-        objectsMarkedForDeletion = [self managedObjectsForClass:@"Birthday" sortedByKey:@"objectId" usingArrayOfIds:[downloadedRecords valueForKey:@"objectId"] inArrayOfIds:NO];
+        objectsMarkedForDeletion = [self managedObjectsForClass:@"Birthday" sortedByKey:@"objectId" usingArrayOfIds:[downloadedRecords valueForKey:@"objectId"] inArrayOfIds:NO withSyncStatus:SDObjectSynced];
         
         for (NSManagedObject * itemToBeDeleted in objectsMarkedForDeletion) {
             [managedObjectContext performBlockAndWait:^{
@@ -291,7 +314,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
         // syncInProgress flag to NO
         //
         [self deleteJSONDataRecordsForClassWithName:@"Birthday"];
-        [self executeSyncCompletedOperations];
+        completion();
     }
 }
 
@@ -318,32 +341,43 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
                 [self writeJSONResponse:responseDictionary toDiskForClassWithName:className andCompletion:^(BOOL success) {
                     if (success) {
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            [self processJSONDataRecordsIntoCoreData];
+                            [self processJSONDataRecordsIntoCoreDataWithCompletionBlock:^{
+                                
+                                // 2. post local changes to server
+                                //      a. post all locally created objects
+                                [self postLocalChangesToServerForClass:className withCompletionBlock:^{
+                                  
+                                    //      b. delete locally deleted objects on server
+                                    [self deleteObjectsOnServerForClass:className withCompletionBlock:^{
+                                        [self executeSyncCompletedOperations];
+                                    }];
+                                    
+                                }];
+                                
+                            }];
                             NSLog(@"");
                         });
+
                     } else {
                         // throw an error to the user
+                        NSAssert(NO, @"");
                     }
                 }];
             } else {
                 
             }
         }];
-        
-        // 2. post local changes to server
-        //      a. post all locally created objects
-        [self postLocalChangesToServerForClass:className];
-        
-        //      b. delete locally deleted objects on server
-        [self deleteObjectsOnServerForClass:className];
     }
 }
 
-- (void)postLocalChangesToServerForClass:(NSString*)className
+- (void)postLocalChangesToServerForClass:(NSString*)className withCompletionBlock:(void(^)())completion
 {
     NSArray * newlyCreatedObjects = [self managedObjectsForClass:className withSyncStatus:SDObjectCreated];
     NSManagedObjectContext * moc = [[SDCoreDataController sharedInstance] masterManagedObjectContext];
-
+    
+    if ([newlyCreatedObjects count] < 1) {
+        completion();
+    }
     for (NSManagedObject * object in newlyCreatedObjects) {
         NSMutableDictionary * jsonObject = [self jsonForManagedObject:object];
         NSMutableURLRequest * urlRequest = [[WSParseAPIClient sharedClient] POSTRequestForClass:@"Birthday" parameters:jsonObject];
@@ -370,20 +404,21 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
                         NSLog(@"Unable to save context for class ");
                     }
                 }
-
             } else {
                 NSLog(@"Failed to create object on server, Error : %@",responseObject.error);
             }
-            
+            completion();
         }];
     }
 }
 
-- (void)deleteObjectsOnServerForClass:(NSString*)className
+- (void)deleteObjectsOnServerForClass:(NSString*)className withCompletionBlock:(void(^)())completion
 {
     NSArray * objectsToDelete = [self managedObjectsForClass:className withSyncStatus:SDObjectDeleted];
     NSManagedObjectContext * moc = [[SDCoreDataController sharedInstance] backgroundManagedObjectContext];
-    
+    if ([objectsToDelete count] < 1) {
+        completion();
+    }
     for (NSManagedObject * object in objectsToDelete) {
         
         NSString * objectId = [[object valueForKey:@"objectId"] description];
@@ -400,11 +435,10 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
                 if (object == [objectsToDelete lastObject]) {
                     [[SDCoreDataController sharedInstance] saveBackgroundContext];
                 }
-                
             } else {
                 NSLog(@"Failed to create object on server, Error : %@",responseObject.error);
             }
-            
+            completion();
         }];
     }
 }
