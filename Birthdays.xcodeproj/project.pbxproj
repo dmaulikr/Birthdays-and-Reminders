@@ -52,10 +52,10 @@
 		97DB39241BE74014003CE087 /* WSTransport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSTransport.m; sourceTree = "<group>"; };
 		97DB392B1BE75247003CE087 /* MyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTableViewCell.h; sourceTree = "<group>"; };
 		97DB392C1BE75247003CE087 /* MyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTableViewCell.m; sourceTree = "<group>"; };
-		97E3E2B91BF3170A00998D5A /* Birthday+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Birthday+CoreDataProperties.h"; sourceTree = "<group>"; };
-		97E3E2BA1BF3170A00998D5A /* Birthday+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Birthday+CoreDataProperties.m"; sourceTree = "<group>"; };
-		97E3E2BB1BF3170A00998D5A /* Birthday.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Birthday.h; sourceTree = "<group>"; };
-		97E3E2BC1BF3170A00998D5A /* Birthday.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Birthday.m; sourceTree = "<group>"; };
+		97E3E2B91BF3170A00998D5A /* Birthday+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Birthday+CoreDataProperties.h"; path = "../Birthday+CoreDataProperties.h"; sourceTree = "<group>"; };
+		97E3E2BA1BF3170A00998D5A /* Birthday+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Birthday+CoreDataProperties.m"; path = "../Birthday+CoreDataProperties.m"; sourceTree = "<group>"; };
+		97E3E2BB1BF3170A00998D5A /* Birthday.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Birthday.h; path = ../Birthday.h; sourceTree = "<group>"; };
+		97E3E2BC1BF3170A00998D5A /* Birthday.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Birthday.m; path = ../Birthday.m; sourceTree = "<group>"; };
 		97E3E2C01BF33E8E00998D5A /* AddNewItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNewItemViewController.h; sourceTree = "<group>"; };
 		97E3E2C11BF33E8E00998D5A /* AddNewItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNewItemViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -86,13 +86,24 @@
 			name = "Non UI Controllers";
 			sourceTree = "<group>";
 		};
+		97858E421C67005000546B91 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				97DB38F81BE738D9003CE087 /* MasterViewController.h */,
+				97DB38F91BE738D9003CE087 /* MasterViewController.m */,
+				97DB38FB1BE738D9003CE087 /* DetailViewController.h */,
+				97DB38FC1BE738D9003CE087 /* DetailViewController.m */,
+				97DB392B1BE75247003CE087 /* MyTableViewCell.h */,
+				97DB392C1BE75247003CE087 /* MyTableViewCell.m */,
+				97E3E2C01BF33E8E00998D5A /* AddNewItemViewController.h */,
+				97E3E2C11BF33E8E00998D5A /* AddNewItemViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
 		97DB38E31BE738D8003CE087 = {
 			isa = PBXGroup;
 			children = (
-				97E3E2B91BF3170A00998D5A /* Birthday+CoreDataProperties.h */,
-				97E3E2BA1BF3170A00998D5A /* Birthday+CoreDataProperties.m */,
-				97E3E2BB1BF3170A00998D5A /* Birthday.h */,
-				97E3E2BC1BF3170A00998D5A /* Birthday.m */,
 				97DB38EE1BE738D9003CE087 /* Birthdays */,
 				97DB38ED1BE738D9003CE087 /* Products */,
 			);
@@ -109,22 +120,14 @@
 		97DB38EE1BE738D9003CE087 /* Birthdays */ = {
 			isa = PBXGroup;
 			children = (
+				97858E421C67005000546B91 /* View Controllers */,
 				9748F34D1C4DD800008C9724 /* Non UI Controllers */,
 				97DB38F21BE738D9003CE087 /* AppDelegate.h */,
 				97DB38F31BE738D9003CE087 /* AppDelegate.m */,
-				97DB38F81BE738D9003CE087 /* MasterViewController.h */,
-				97DB38F91BE738D9003CE087 /* MasterViewController.m */,
-				97DB38FB1BE738D9003CE087 /* DetailViewController.h */,
-				97DB38FC1BE738D9003CE087 /* DetailViewController.m */,
 				97DB38FE1BE738D9003CE087 /* Main.storyboard */,
-				97DB392B1BE75247003CE087 /* MyTableViewCell.h */,
-				97DB392C1BE75247003CE087 /* MyTableViewCell.m */,
-				97E3E2C01BF33E8E00998D5A /* AddNewItemViewController.h */,
-				97E3E2C11BF33E8E00998D5A /* AddNewItemViewController.m */,
 				97DB39011BE738D9003CE087 /* Assets.xcassets */,
 				97DB39031BE738D9003CE087 /* LaunchScreen.storyboard */,
 				97DB39061BE738D9003CE087 /* Info.plist */,
-				97DB38F51BE738D9003CE087 /* Birthdays.xcdatamodeld */,
 				97DB38EF1BE738D9003CE087 /* Supporting Files */,
 			);
 			path = Birthdays;
@@ -133,6 +136,11 @@
 		97DB38EF1BE738D9003CE087 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				97DB38F51BE738D9003CE087 /* Birthdays.xcdatamodeld */,
+				97E3E2B91BF3170A00998D5A /* Birthday+CoreDataProperties.h */,
+				97E3E2BA1BF3170A00998D5A /* Birthday+CoreDataProperties.m */,
+				97E3E2BB1BF3170A00998D5A /* Birthday.h */,
+				97E3E2BC1BF3170A00998D5A /* Birthday.m */,
 				97DB38F01BE738D9003CE087 /* main.m */,
 				97DB392A1BE74122003CE087 /* resources */,
 			);
