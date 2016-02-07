@@ -47,8 +47,6 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
             [self downloadDataForRegisteredObjects:YES];
         });
     }
-//    NSArray * arr =  [self managedObjectsForClass:@"Birthday" withSyncStatus:SDObjectSynced];
-//    NSLog(@"%@",arr);
 }
 
 - (BOOL)initialSyncComplete {
@@ -95,17 +93,13 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Birthday"];
     [request setSortDescriptors:[NSArray arrayWithObject:
                                  [NSSortDescriptor sortDescriptorWithKey:@"updatedAt" ascending:NO]]];
-    //
-    // You are only interested in 1 result so limit the request to 1
-    //
+    // only interested in 1 result so limit the request to 1
     [request setFetchLimit:1];
     [[[WSCoreDataController sharedInstance] backgroundManagedObjectContext] performBlockAndWait:^{
         NSError *error = nil;
         NSArray *results = [[[WSCoreDataController sharedInstance] backgroundManagedObjectContext] executeFetchRequest:request error:&error];
         if ([results lastObject])   {
-            //
             // Set date to the fetched result
-            //
             date = [[results lastObject] valueForKey:@"updatedAt"];
         }
     }];
@@ -132,27 +126,9 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
 //        NSDate *date = [self dateUsingStringFromAPI:value];
 //        [managedObject setValue:date forKey:key];
     } else if ([value isKindOfClass:[NSDictionary class]]) {
-//        if ([value objectForKey:@"__type"]) {
-//            NSString *dataType = [value objectForKey:@"__type"];
-//            if ([dataType isEqualToString:@"Date"]) {
-//                NSString *dateString = [value objectForKey:@"iso"];
-//                NSDate *date = [self dateUsingStringFromAPI:dateString];
-//                [managedObject setValue:date forKey:key];
-//            } else if ([dataType isEqualToString:@"File"]) {
-//                NSString *urlString = [value objectForKey:@"url"];
-//                NSURL *url = [NSURL URLWithString:urlString];
-//                NSURLRequest *request = [NSURLRequest requestWithURL:url];
-//                NSURLResponse *response = nil;
-//                NSError *error = nil;
-//                NSData *dataResponse = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-//                [managedObject setValue:dataResponse forKey:key];
-//            } else {
-//                NSLog(@"Unknown Data Type Received");
-//                [managedObject setValue:nil forKey:key];
-//            }
-//        }
+        // handle if we have a object of this type
+        
     } else if ([key isEqualToString:@"updatedAt"] || [key isEqualToString:@"createdAt"] || [key isEqualToString:@"image"] || [key isEqualToString:@"date"]) {
-
 
     } else if ([key isEqualToString:@"giftIdeas"]) {
         [managedObject setValue:value forKey:@"birthday"];
@@ -234,26 +210,22 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
 
 - (void)processJSONDataRecordsIntoCoreDataWithCompletionBlock:(void(^)())completion {
     NSManagedObjectContext *managedObjectContext = [[WSCoreDataController sharedInstance] backgroundManagedObjectContext];
-    //
+
     // Iterate over all registered classes to sync
-    //
     for (NSString *className in self.registeredClassesToSync) {
         if (![self initialSyncComplete]) { // import all downloaded data to Core Data for initial sync
-            //
-            // If this is the initial sync then the logic is pretty simple, you will fetch the JSON data from disk
+
+            // If this is the initial sync then the logic is pretty simple, we will fetch the JSON data from disk
             // for the class of the current iteration and create new NSManagedObjects for each record
-            //
             NSDictionary *JSONDictionary = [self JSONDictionaryForClassWithName:@"Birthday"];
             NSArray *records = [JSONDictionary objectForKey:@"results"];
             for (NSDictionary *record in records) {
                 [self newManagedObjectWithClassName:@"Birthday" forRecord:record];
             }
         } else {
-            //
-            // Otherwise you need to do some more logic to determine if the record is new or has been updated.
+            // Otherwise we need to do some more logic to determine if the record is new or has been updated.
             // First get the downloaded records from the JSON response, verify there is at least one object in
             // the data, and then fetch all records stored in Core Data whose objectId matches those from the JSON response.
-            //
             NSArray *downloadedRecords = [self JSONDataRecordsForClass:className sortedByKey:@"objectId"];
             
             NSSortDescriptor *sortByName = [NSSortDescriptor sortDescriptorWithKey:@"objectId"
@@ -308,11 +280,8 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
         }];
         [[WSCoreDataController sharedInstance] saveMasterContext];
 
-        //
-        // You are now done with the downloaded JSON responses so you can delete them to clean up after yourself,
+        // we are now done with the downloaded JSON responses so you can delete them to clean up after yourself,
         // then call your -executeSyncCompletedOperations to save off your master context and set the
-        // syncInProgress flag to NO
-        //
         [self deleteJSONDataRecordsForClassWithName:@"Birthday"];
         completion();
     }
@@ -332,40 +301,34 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
         urlRequest.allHTTPHeaderFields = headerDict;
         WSTransport *transport = [[WSTransport alloc] init];
         [transport retrieve:urlRequest completionBlock:^(BOOL success, YZTransportResponseObject *responseObject) {
-            if (success) {
-                NSString *dataString = [[NSString alloc] initWithData:responseObject.data encoding:NSUTF8StringEncoding];
-                NSData *jsonData = [dataString dataUsingEncoding:NSUTF8StringEncoding];
-                NSError *error = nil;
-                NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
-                NSLog(@"%@",responseDictionary);
-                [self writeJSONResponse:responseDictionary toDiskForClassWithName:className andCompletion:^(BOOL success) {
-                    if (success) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [self processJSONDataRecordsIntoCoreDataWithCompletionBlock:^{
-                                
-                                // 2. post local changes to server
-                                //      a. post all locally created objects
-                                [self postLocalChangesToServerForClass:className withCompletionBlock:^{
-                                  
-                                    //      b. delete locally deleted objects on server
-                                    [self deleteObjectsOnServerForClass:className withCompletionBlock:^{
-                                        [self executeSyncCompletedOperations];
-                                    }];
-                                    
-                                }];
-                                
-                            }];
-                            NSLog(@"");
-                        });
-
-                    } else {
-                        // throw an error to the user
-                        NSAssert(NO, @"");
-                    }
-                }];
-            } else {
-                
+            if (!success) {
+                NSLog(@"Unable to download objects from the server, Error = %@",responseObject.error);
+                return;
             }
+            NSString *dataString = [[NSString alloc] initWithData:responseObject.data encoding:NSUTF8StringEncoding];
+            NSData *jsonData = [dataString dataUsingEncoding:NSUTF8StringEncoding];
+            NSError *error = nil;
+            NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+            NSLog(@"%@",responseDictionary);
+            
+            [self writeJSONResponse:responseDictionary toDiskForClassWithName:className andCompletion:^(BOOL success) {
+                if (!success) {
+                    NSAssert(NO, @"Failed to write response data to server");
+                    return;
+                }
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self processJSONDataRecordsIntoCoreDataWithCompletionBlock:^{
+                        
+                        // post local changes to server
+                        [self postLocalChangesToServerForClass:className withCompletionBlock:^{
+                            // Delete locally deleted objects on server
+                            [self deleteObjectsOnServerForClass:className withCompletionBlock:^{
+                                [self executeSyncCompletedOperations];
+                            }];
+                        }];
+                    }];
+                });
+            }];
         }];
     }
 }
