@@ -20,7 +20,7 @@
 		97FC123D1C712CB5006EA533 /* AddNewItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC12361C712CB5006EA533 /* AddNewItemViewController.m */; };
 		97FC123E1C712CB5006EA533 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC12381C712CB5006EA533 /* DetailViewController.m */; };
 		97FC123F1C712CB5006EA533 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC123A1C712CB5006EA533 /* MasterViewController.m */; };
-		97FC12401C712CB5006EA533 /* MyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC123C1C712CB5006EA533 /* MyTableViewCell.m */; };
+		97FC12401C712CB5006EA533 /* WSTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC123C1C712CB5006EA533 /* WSTableViewCell.m */; };
 		97FC12441C712D51006EA533 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC12431C712D51006EA533 /* Reachability.m */; };
 		97FC12491C712E7C006EA533 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC12471C712E7C006EA533 /* main.m */; };
 		97FC124B1C712EEB006EA533 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 97FC124A1C712EEB006EA533 /* Info.plist */; };
@@ -52,8 +52,8 @@
 		97FC12381C712CB5006EA533 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetailViewController.m; path = "View Controllers/DetailViewController.m"; sourceTree = "<group>"; };
 		97FC12391C712CB5006EA533 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MasterViewController.h; path = "View Controllers/MasterViewController.h"; sourceTree = "<group>"; };
 		97FC123A1C712CB5006EA533 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MasterViewController.m; path = "View Controllers/MasterViewController.m"; sourceTree = "<group>"; };
-		97FC123B1C712CB5006EA533 /* MyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyTableViewCell.h; path = "View Controllers/MyTableViewCell.h"; sourceTree = "<group>"; };
-		97FC123C1C712CB5006EA533 /* MyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyTableViewCell.m; path = "View Controllers/MyTableViewCell.m"; sourceTree = "<group>"; };
+		97FC123B1C712CB5006EA533 /* WSTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WSTableViewCell.h; path = "View Controllers/WSTableViewCell.h"; sourceTree = "<group>"; };
+		97FC123C1C712CB5006EA533 /* WSTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WSTableViewCell.m; path = "View Controllers/WSTableViewCell.m"; sourceTree = "<group>"; };
 		97FC12421C712D51006EA533 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = External/Reachability.h; sourceTree = "<group>"; };
 		97FC12431C712D51006EA533 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = External/Reachability.m; sourceTree = "<group>"; };
 		97FC12471C712E7C006EA533 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "Supporting Files/main.m"; sourceTree = "<group>"; };
@@ -96,8 +96,8 @@
 				97FC12381C712CB5006EA533 /* DetailViewController.m */,
 				97FC12391C712CB5006EA533 /* MasterViewController.h */,
 				97FC123A1C712CB5006EA533 /* MasterViewController.m */,
-				97FC123B1C712CB5006EA533 /* MyTableViewCell.h */,
-				97FC123C1C712CB5006EA533 /* MyTableViewCell.m */,
+				97FC123B1C712CB5006EA533 /* WSTableViewCell.h */,
+				97FC123C1C712CB5006EA533 /* WSTableViewCell.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -245,7 +245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97E3E2BD1BF3170A00998D5A /* Birthday+CoreDataProperties.m in Sources */,
-				97FC12401C712CB5006EA533 /* MyTableViewCell.m in Sources */,
+				97FC12401C712CB5006EA533 /* WSTableViewCell.m in Sources */,
 				97DB38F41BE738D9003CE087 /* AppDelegate.m in Sources */,
 				97FC123F1C712CB5006EA533 /* MasterViewController.m in Sources */,
 				97FC124E1C712F85006EA533 /* Birthdays.xcdatamodeld in Sources */,
