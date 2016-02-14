@@ -34,7 +34,6 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
     dispatch_once(&onceToken, ^{
         sharedEngine = [[WSSyncEngine alloc] init];
     });
-    
     return sharedEngine;
 }
 
@@ -75,7 +74,6 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
     if (!self.registeredClassesToSync) {
         self.registeredClassesToSync = [NSMutableArray array];
     }
-    
     if ([aClass isSubclassOfClass:[NSManagedObject class]]) {
         if (![self.registeredClassesToSync containsObject:NSStringFromClass(aClass)]) {
             [self.registeredClassesToSync addObject:NSStringFromClass(aClass)];
@@ -85,7 +83,6 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
     } else {
         NSLog(@"Unable to register %@ as it is not a subclass of NSManagedObject", NSStringFromClass(aClass));
     }
-    
 }
 
 - (NSDate *)mostRecentUpdatedAtDateForEntityWithName:(NSString *)entityName {
@@ -103,7 +100,6 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
             date = [[results lastObject] valueForKey:@"updatedAt"];
         }
     }];
-    
     return date;
 }
 
@@ -127,12 +123,9 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
 //        [managedObject setValue:date forKey:key];
     } else if ([value isKindOfClass:[NSDictionary class]]) {
         // handle if we have a object of this type
-        
     } else if ([key isEqualToString:@"updatedAt"] || [key isEqualToString:@"createdAt"] || [key isEqualToString:@"image"] || [key isEqualToString:@"date"]) {
-
     } else if ([key isEqualToString:@"giftIdeas"]) {
         [managedObject setValue:value forKey:@"birthday"];
-        
     } else {
         [managedObject setValue:value forKey:key];
     }
@@ -288,7 +281,6 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
 }
 
 - (void)downloadDataForRegisteredObjects:(BOOL)useUpdatedAtDate {
-    
     for (NSString *className in self.registeredClassesToSync) {
         // 1. get all changes from server
         NSDate *mostRecentUpdatedDate = nil;
@@ -300,7 +292,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
         NSMutableURLRequest *urlRequest = [[WSParseAPIClient sharedClient] GETRequestForAllRecordsOfClass:@"Birthday" updatedAfterDate:mostRecentUpdatedDate];
         urlRequest.allHTTPHeaderFields = headerDict;
         WSTransport *transport = [[WSTransport alloc] init];
-        [transport retrieve:urlRequest completionBlock:^(BOOL success, YZTransportResponseObject *responseObject) {
+        [transport retrieve:urlRequest completionBlock:^(BOOL success, WSTransportResponseObject *responseObject) {
             if (!success) {
                 NSLog(@"Unable to download objects from the server, Error = %@",responseObject.error);
                 return;
@@ -318,7 +310,6 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self processJSONDataRecordsIntoCoreDataWithCompletionBlock:^{
-                        
                         // post local changes to server
                         [self postLocalChangesToServerForClass:className withCompletionBlock:^{
                             // Delete locally deleted objects on server
@@ -333,8 +324,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
     }
 }
 
-- (void)postLocalChangesToServerForClass:(NSString*)className withCompletionBlock:(void(^)())completion
-{
+- (void)postLocalChangesToServerForClass:(NSString*)className withCompletionBlock:(void(^)())completion {
     NSArray * newlyCreatedObjects = [self managedObjectsForClass:className withSyncStatus:SDObjectCreated];
     NSManagedObjectContext * moc = [[WSCoreDataController sharedInstance] masterManagedObjectContext];
     
@@ -347,7 +337,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
         urlRequest.allHTTPHeaderFields = [WSParseAPIClient generateESHeader];
 
         WSTransport * transport = [[WSTransport alloc] init];
-        [transport retrieve:urlRequest completionBlock:^(BOOL success, YZTransportResponseObject *responseObject) {
+        [transport retrieve:urlRequest completionBlock:^(BOOL success, WSTransportResponseObject *responseObject) {
             
             if (success) {
                 NSString *dataString = [[NSString alloc] initWithData:responseObject.data encoding:NSUTF8StringEncoding];
@@ -375,8 +365,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
     }
 }
 
-- (void)deleteObjectsOnServerForClass:(NSString*)className withCompletionBlock:(void(^)())completion
-{
+- (void)deleteObjectsOnServerForClass:(NSString*)className withCompletionBlock:(void(^)())completion {
     NSArray * objectsToDelete = [self managedObjectsForClass:className withSyncStatus:SDObjectDeleted];
     NSManagedObjectContext * moc = [[WSCoreDataController sharedInstance] backgroundManagedObjectContext];
     if ([objectsToDelete count] < 1) {
@@ -389,12 +378,10 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
         urlRequest.allHTTPHeaderFields = [WSParseAPIClient generateESHeader];
         
         WSTransport * transport = [[WSTransport alloc] init];
-        [transport retrieve:urlRequest completionBlock:^(BOOL success, YZTransportResponseObject *responseObject) {
-            
+        [transport retrieve:urlRequest completionBlock:^(BOOL success, WSTransportResponseObject *responseObject) {
             if (success) {
                 // set the SDSyncStatus and objectID
                 [moc deleteObject:object];
-                
                 if (object == [objectsToDelete lastObject]) {
                     [[WSCoreDataController sharedInstance] saveBackgroundContext];
                 }
@@ -426,7 +413,6 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
     [self initializeDateFormatter];
     // NSDateFormatter does not like ISO 8601 so strip the milliseconds and timezone
     dateString = [dateString substringWithRange:NSMakeRange(0, [dateString length]-5)];
-    
     return [self.dateFormatter dateFromString:dateString];
 }
 
@@ -443,13 +429,11 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
 
 #pragma mark - File Management
 
-- (NSURL *)applicationCacheDirectory
-{
+- (NSURL *)applicationCacheDirectory {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
-- (NSURL *)JSONDataRecordsDirectory{
-    
+- (NSURL *)JSONDataRecordsDirectory {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSURL *url = [NSURL URLWithString:@"JSONRecords/" relativeToURL:[self applicationCacheDirectory]];
     NSLog(@"file is at: %@",url);

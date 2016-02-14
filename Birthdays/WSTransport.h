@@ -8,9 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-//TODO: convert to YZErrorEnumFactoryMacros
-
-@interface YZTransportResponseObject : NSObject
+@interface WSTransportResponseObject : NSObject
 @property (strong, nonatomic) NSData *data;
 @property (strong, nonatomic) NSHTTPURLResponse *response;
 @property (strong, nonatomic) NSError *error;
@@ -21,9 +19,8 @@
 
 @interface WSTransport : NSObject
 
-- (void)send:(NSData *)dataToUpload urlRequest:(NSURLRequest *)urlRequest completionBlock:(void (^)(BOOL success, YZTransportResponseObject *responseObject))completionBlock;
+- (void)send:(NSData *)dataToUpload urlRequest:(NSURLRequest *)urlRequest completionBlock:(void (^)(BOOL success, WSTransportResponseObject *responseObject))completionBlock;
 
-- (void)retrieve:(NSURLRequest *)urlRequest completionBlock:(void (^)(BOOL success, YZTransportResponseObject *responseObject))completionBlock;
+- (void)retrieve:(NSURLRequest *)urlRequest completionBlock:(void (^)(BOOL success, WSTransportResponseObject *responseObject))completionBlock;
 
-- (void)synchronousRetrieve:(NSURLRequest *)urlRequest completionBlock:(void (^)(BOOL success, YZTransportResponseObject *responseObject))completionBlock;
 @end
