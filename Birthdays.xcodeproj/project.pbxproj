@@ -7,57 +7,58 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		97DB38F11BE738D9003CE087 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB38F01BE738D9003CE087 /* main.m */; };
 		97DB38F41BE738D9003CE087 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB38F31BE738D9003CE087 /* AppDelegate.m */; };
-		97DB38F71BE738D9003CE087 /* Birthdays.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 97DB38F51BE738D9003CE087 /* Birthdays.xcdatamodeld */; };
-		97DB38FA1BE738D9003CE087 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB38F91BE738D9003CE087 /* MasterViewController.m */; };
-		97DB38FD1BE738D9003CE087 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB38FC1BE738D9003CE087 /* DetailViewController.m */; };
 		97DB39001BE738D9003CE087 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97DB38FE1BE738D9003CE087 /* Main.storyboard */; };
 		97DB39021BE738D9003CE087 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97DB39011BE738D9003CE087 /* Assets.xcassets */; };
 		97DB39051BE738D9003CE087 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97DB39031BE738D9003CE087 /* LaunchScreen.storyboard */; };
-		97DB39251BE74014003CE087 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB391C1BE74014003CE087 /* Reachability.m */; };
-		97DB39261BE74014003CE087 /* WSCoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB391E1BE74014003CE087 /* WSCoreDataController.m */; };
-		97DB39271BE74014003CE087 /* WSParseAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB39201BE74014003CE087 /* WSParseAPIClient.m */; };
-		97DB39281BE74014003CE087 /* WSSyncEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB39221BE74014003CE087 /* WSSyncEngine.m */; };
-		97DB39291BE74014003CE087 /* WSTransport.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB39241BE74014003CE087 /* WSTransport.m */; };
-		97DB392D1BE75247003CE087 /* MyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB392C1BE75247003CE087 /* MyTableViewCell.m */; };
 		97E3E2BD1BF3170A00998D5A /* Birthday+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 97E3E2BA1BF3170A00998D5A /* Birthday+CoreDataProperties.m */; };
 		97E3E2BE1BF3170A00998D5A /* Birthday.m in Sources */ = {isa = PBXBuildFile; fileRef = 97E3E2BC1BF3170A00998D5A /* Birthday.m */; };
-		97E3E2C21BF33E8E00998D5A /* AddNewItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97E3E2C11BF33E8E00998D5A /* AddNewItemViewController.m */; };
+		97FC122B1C712B69006EA533 /* WSTransport.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC122A1C712B69006EA533 /* WSTransport.m */; };
+		97FC12321C712BFC006EA533 /* WSCoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC122D1C712BFC006EA533 /* WSCoreDataController.m */; };
+		97FC12331C712BFC006EA533 /* WSParseAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC122F1C712BFC006EA533 /* WSParseAPIClient.m */; };
+		97FC12341C712BFC006EA533 /* WSSyncEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC12311C712BFC006EA533 /* WSSyncEngine.m */; };
+		97FC123D1C712CB5006EA533 /* AddNewItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC12361C712CB5006EA533 /* AddNewItemViewController.m */; };
+		97FC123E1C712CB5006EA533 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC12381C712CB5006EA533 /* DetailViewController.m */; };
+		97FC123F1C712CB5006EA533 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC123A1C712CB5006EA533 /* MasterViewController.m */; };
+		97FC12401C712CB5006EA533 /* WSTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC123C1C712CB5006EA533 /* WSTableViewCell.m */; };
+		97FC12441C712D51006EA533 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC12431C712D51006EA533 /* Reachability.m */; };
+		97FC12491C712E7C006EA533 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC12471C712E7C006EA533 /* main.m */; };
+		97FC124B1C712EEB006EA533 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 97FC124A1C712EEB006EA533 /* Info.plist */; };
+		97FC124E1C712F85006EA533 /* Birthdays.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 97FC124C1C712F85006EA533 /* Birthdays.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		97DB38EC1BE738D9003CE087 /* Birthdays.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Birthdays.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		97DB38F01BE738D9003CE087 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		97DB38F21BE738D9003CE087 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		97DB38F31BE738D9003CE087 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		97DB38F61BE738D9003CE087 /* Birthdays.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Birthdays.xcdatamodel; sourceTree = "<group>"; };
-		97DB38F81BE738D9003CE087 /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
-		97DB38F91BE738D9003CE087 /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
-		97DB38FB1BE738D9003CE087 /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
-		97DB38FC1BE738D9003CE087 /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		97DB38FF1BE738D9003CE087 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		97DB39011BE738D9003CE087 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97DB39041BE738D9003CE087 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		97DB39061BE738D9003CE087 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		97DB391B1BE74014003CE087 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		97DB391C1BE74014003CE087 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
-		97DB391D1BE74014003CE087 /* WSCoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSCoreDataController.h; sourceTree = "<group>"; };
-		97DB391E1BE74014003CE087 /* WSCoreDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSCoreDataController.m; sourceTree = "<group>"; };
-		97DB391F1BE74014003CE087 /* WSParseAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSParseAPIClient.h; sourceTree = "<group>"; };
-		97DB39201BE74014003CE087 /* WSParseAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSParseAPIClient.m; sourceTree = "<group>"; };
-		97DB39211BE74014003CE087 /* WSSyncEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSSyncEngine.h; sourceTree = "<group>"; };
-		97DB39221BE74014003CE087 /* WSSyncEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSSyncEngine.m; sourceTree = "<group>"; };
-		97DB39231BE74014003CE087 /* WSTransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSTransport.h; sourceTree = "<group>"; };
-		97DB39241BE74014003CE087 /* WSTransport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSTransport.m; sourceTree = "<group>"; };
-		97DB392B1BE75247003CE087 /* MyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTableViewCell.h; sourceTree = "<group>"; };
-		97DB392C1BE75247003CE087 /* MyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTableViewCell.m; sourceTree = "<group>"; };
 		97E3E2B91BF3170A00998D5A /* Birthday+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Birthday+CoreDataProperties.h"; path = "../Birthday+CoreDataProperties.h"; sourceTree = "<group>"; };
 		97E3E2BA1BF3170A00998D5A /* Birthday+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Birthday+CoreDataProperties.m"; path = "../Birthday+CoreDataProperties.m"; sourceTree = "<group>"; };
 		97E3E2BB1BF3170A00998D5A /* Birthday.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Birthday.h; path = ../Birthday.h; sourceTree = "<group>"; };
 		97E3E2BC1BF3170A00998D5A /* Birthday.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Birthday.m; path = ../Birthday.m; sourceTree = "<group>"; };
-		97E3E2C01BF33E8E00998D5A /* AddNewItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNewItemViewController.h; sourceTree = "<group>"; };
-		97E3E2C11BF33E8E00998D5A /* AddNewItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNewItemViewController.m; sourceTree = "<group>"; };
+		97FC12291C712B69006EA533 /* WSTransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WSTransport.h; path = "Non UI Controllers/WSTransport.h"; sourceTree = "<group>"; };
+		97FC122A1C712B69006EA533 /* WSTransport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WSTransport.m; path = "Non UI Controllers/WSTransport.m"; sourceTree = "<group>"; };
+		97FC122C1C712BFC006EA533 /* WSCoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WSCoreDataController.h; path = "Non UI Controllers/WSCoreDataController.h"; sourceTree = "<group>"; };
+		97FC122D1C712BFC006EA533 /* WSCoreDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WSCoreDataController.m; path = "Non UI Controllers/WSCoreDataController.m"; sourceTree = "<group>"; };
+		97FC122E1C712BFC006EA533 /* WSParseAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WSParseAPIClient.h; path = "Non UI Controllers/WSParseAPIClient.h"; sourceTree = "<group>"; };
+		97FC122F1C712BFC006EA533 /* WSParseAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WSParseAPIClient.m; path = "Non UI Controllers/WSParseAPIClient.m"; sourceTree = "<group>"; };
+		97FC12301C712BFC006EA533 /* WSSyncEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WSSyncEngine.h; path = "Non UI Controllers/WSSyncEngine.h"; sourceTree = "<group>"; };
+		97FC12311C712BFC006EA533 /* WSSyncEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WSSyncEngine.m; path = "Non UI Controllers/WSSyncEngine.m"; sourceTree = "<group>"; };
+		97FC12351C712CB5006EA533 /* AddNewItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddNewItemViewController.h; path = "View Controllers/AddNewItemViewController.h"; sourceTree = "<group>"; };
+		97FC12361C712CB5006EA533 /* AddNewItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddNewItemViewController.m; path = "View Controllers/AddNewItemViewController.m"; sourceTree = "<group>"; };
+		97FC12371C712CB5006EA533 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetailViewController.h; path = "View Controllers/DetailViewController.h"; sourceTree = "<group>"; };
+		97FC12381C712CB5006EA533 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetailViewController.m; path = "View Controllers/DetailViewController.m"; sourceTree = "<group>"; };
+		97FC12391C712CB5006EA533 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MasterViewController.h; path = "View Controllers/MasterViewController.h"; sourceTree = "<group>"; };
+		97FC123A1C712CB5006EA533 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MasterViewController.m; path = "View Controllers/MasterViewController.m"; sourceTree = "<group>"; };
+		97FC123B1C712CB5006EA533 /* WSTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WSTableViewCell.h; path = "View Controllers/WSTableViewCell.h"; sourceTree = "<group>"; };
+		97FC123C1C712CB5006EA533 /* WSTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WSTableViewCell.m; path = "View Controllers/WSTableViewCell.m"; sourceTree = "<group>"; };
+		97FC12421C712D51006EA533 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = External/Reachability.h; sourceTree = "<group>"; };
+		97FC12431C712D51006EA533 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = External/Reachability.m; sourceTree = "<group>"; };
+		97FC12471C712E7C006EA533 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "Supporting Files/main.m"; sourceTree = "<group>"; };
+		97FC124A1C712EEB006EA533 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		97FC124D1C712F85006EA533 /* Birthdays.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Birthdays.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,14 +75,14 @@
 		9748F34D1C4DD800008C9724 /* Non UI Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				97DB391D1BE74014003CE087 /* WSCoreDataController.h */,
-				97DB391E1BE74014003CE087 /* WSCoreDataController.m */,
-				97DB391F1BE74014003CE087 /* WSParseAPIClient.h */,
-				97DB39201BE74014003CE087 /* WSParseAPIClient.m */,
-				97DB39211BE74014003CE087 /* WSSyncEngine.h */,
-				97DB39221BE74014003CE087 /* WSSyncEngine.m */,
-				97DB39231BE74014003CE087 /* WSTransport.h */,
-				97DB39241BE74014003CE087 /* WSTransport.m */,
+				97FC122C1C712BFC006EA533 /* WSCoreDataController.h */,
+				97FC122D1C712BFC006EA533 /* WSCoreDataController.m */,
+				97FC122E1C712BFC006EA533 /* WSParseAPIClient.h */,
+				97FC122F1C712BFC006EA533 /* WSParseAPIClient.m */,
+				97FC12301C712BFC006EA533 /* WSSyncEngine.h */,
+				97FC12311C712BFC006EA533 /* WSSyncEngine.m */,
+				97FC12291C712B69006EA533 /* WSTransport.h */,
+				97FC122A1C712B69006EA533 /* WSTransport.m */,
 			);
 			name = "Non UI Controllers";
 			sourceTree = "<group>";
@@ -89,14 +90,14 @@
 		97858E421C67005000546B91 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				97DB38F81BE738D9003CE087 /* MasterViewController.h */,
-				97DB38F91BE738D9003CE087 /* MasterViewController.m */,
-				97DB38FB1BE738D9003CE087 /* DetailViewController.h */,
-				97DB38FC1BE738D9003CE087 /* DetailViewController.m */,
-				97DB392B1BE75247003CE087 /* MyTableViewCell.h */,
-				97DB392C1BE75247003CE087 /* MyTableViewCell.m */,
-				97E3E2C01BF33E8E00998D5A /* AddNewItemViewController.h */,
-				97E3E2C11BF33E8E00998D5A /* AddNewItemViewController.m */,
+				97FC12351C712CB5006EA533 /* AddNewItemViewController.h */,
+				97FC12361C712CB5006EA533 /* AddNewItemViewController.m */,
+				97FC12371C712CB5006EA533 /* DetailViewController.h */,
+				97FC12381C712CB5006EA533 /* DetailViewController.m */,
+				97FC12391C712CB5006EA533 /* MasterViewController.h */,
+				97FC123A1C712CB5006EA533 /* MasterViewController.m */,
+				97FC123B1C712CB5006EA533 /* WSTableViewCell.h */,
+				97FC123C1C712CB5006EA533 /* WSTableViewCell.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -122,12 +123,12 @@
 			children = (
 				97858E421C67005000546B91 /* View Controllers */,
 				9748F34D1C4DD800008C9724 /* Non UI Controllers */,
+				97FC12411C712D2C006EA533 /* External */,
+				97FC12451C712E3D006EA533 /* Model */,
 				97DB38F21BE738D9003CE087 /* AppDelegate.h */,
 				97DB38F31BE738D9003CE087 /* AppDelegate.m */,
 				97DB38FE1BE738D9003CE087 /* Main.storyboard */,
 				97DB39011BE738D9003CE087 /* Assets.xcassets */,
-				97DB39031BE738D9003CE087 /* LaunchScreen.storyboard */,
-				97DB39061BE738D9003CE087 /* Info.plist */,
 				97DB38EF1BE738D9003CE087 /* Supporting Files */,
 			);
 			path = Birthdays;
@@ -136,12 +137,9 @@
 		97DB38EF1BE738D9003CE087 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				97DB38F51BE738D9003CE087 /* Birthdays.xcdatamodeld */,
-				97E3E2B91BF3170A00998D5A /* Birthday+CoreDataProperties.h */,
-				97E3E2BA1BF3170A00998D5A /* Birthday+CoreDataProperties.m */,
-				97E3E2BB1BF3170A00998D5A /* Birthday.h */,
-				97E3E2BC1BF3170A00998D5A /* Birthday.m */,
-				97DB38F01BE738D9003CE087 /* main.m */,
+				97DB39031BE738D9003CE087 /* LaunchScreen.storyboard */,
+				97FC124A1C712EEB006EA533 /* Info.plist */,
+				97FC12471C712E7C006EA533 /* main.m */,
 				97DB392A1BE74122003CE087 /* resources */,
 			);
 			name = "Supporting Files";
@@ -150,10 +148,29 @@
 		97DB392A1BE74122003CE087 /* resources */ = {
 			isa = PBXGroup;
 			children = (
-				97DB391B1BE74014003CE087 /* Reachability.h */,
-				97DB391C1BE74014003CE087 /* Reachability.m */,
 			);
 			name = resources;
+			sourceTree = "<group>";
+		};
+		97FC12411C712D2C006EA533 /* External */ = {
+			isa = PBXGroup;
+			children = (
+				97FC12421C712D51006EA533 /* Reachability.h */,
+				97FC12431C712D51006EA533 /* Reachability.m */,
+			);
+			name = External;
+			sourceTree = "<group>";
+		};
+		97FC12451C712E3D006EA533 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				97E3E2B91BF3170A00998D5A /* Birthday+CoreDataProperties.h */,
+				97E3E2BA1BF3170A00998D5A /* Birthday+CoreDataProperties.m */,
+				97E3E2BB1BF3170A00998D5A /* Birthday.h */,
+				97E3E2BC1BF3170A00998D5A /* Birthday.m */,
+				97FC124C1C712F85006EA533 /* Birthdays.xcdatamodeld */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,6 +230,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97FC124B1C712EEB006EA533 /* Info.plist in Resources */,
 				97DB39051BE738D9003CE087 /* LaunchScreen.storyboard in Resources */,
 				97DB39021BE738D9003CE087 /* Assets.xcassets in Resources */,
 				97DB39001BE738D9003CE087 /* Main.storyboard in Resources */,
@@ -226,20 +244,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				97DB392D1BE75247003CE087 /* MyTableViewCell.m in Sources */,
-				97DB39291BE74014003CE087 /* WSTransport.m in Sources */,
 				97E3E2BD1BF3170A00998D5A /* Birthday+CoreDataProperties.m in Sources */,
-				97DB38FD1BE738D9003CE087 /* DetailViewController.m in Sources */,
-				97DB38FA1BE738D9003CE087 /* MasterViewController.m in Sources */,
-				97DB39261BE74014003CE087 /* WSCoreDataController.m in Sources */,
-				97DB39271BE74014003CE087 /* WSParseAPIClient.m in Sources */,
+				97FC12401C712CB5006EA533 /* WSTableViewCell.m in Sources */,
 				97DB38F41BE738D9003CE087 /* AppDelegate.m in Sources */,
-				97DB38F11BE738D9003CE087 /* main.m in Sources */,
-				97DB39251BE74014003CE087 /* Reachability.m in Sources */,
-				97E3E2C21BF33E8E00998D5A /* AddNewItemViewController.m in Sources */,
+				97FC123F1C712CB5006EA533 /* MasterViewController.m in Sources */,
+				97FC124E1C712F85006EA533 /* Birthdays.xcdatamodeld in Sources */,
+				97FC12331C712BFC006EA533 /* WSParseAPIClient.m in Sources */,
+				97FC122B1C712B69006EA533 /* WSTransport.m in Sources */,
+				97FC12341C712BFC006EA533 /* WSSyncEngine.m in Sources */,
 				97E3E2BE1BF3170A00998D5A /* Birthday.m in Sources */,
-				97DB38F71BE738D9003CE087 /* Birthdays.xcdatamodeld in Sources */,
-				97DB39281BE74014003CE087 /* WSSyncEngine.m in Sources */,
+				97FC12321C712BFC006EA533 /* WSCoreDataController.m in Sources */,
+				97FC12441C712D51006EA533 /* Reachability.m in Sources */,
+				97FC123D1C712CB5006EA533 /* AddNewItemViewController.m in Sources */,
+				97FC12491C712E7C006EA533 /* main.m in Sources */,
+				97FC123E1C712CB5006EA533 /* DetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,13 +411,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		97DB38F51BE738D9003CE087 /* Birthdays.xcdatamodeld */ = {
+		97FC124C1C712F85006EA533 /* Birthdays.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				97DB38F61BE738D9003CE087 /* Birthdays.xcdatamodel */,
+				97FC124D1C712F85006EA533 /* Birthdays.xcdatamodel */,
 			);
-			currentVersion = 97DB38F61BE738D9003CE087 /* Birthdays.xcdatamodel */;
-			path = Birthdays.xcdatamodeld;
+			currentVersion = 97FC124D1C712F85006EA533 /* Birthdays.xcdatamodel */;
+			name = Birthdays.xcdatamodeld;
+			path = Model/Birthdays.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

@@ -1,14 +1,14 @@
 //
-//  MyTableViewCell.m
+//  WSTableViewCell.m
 //  Birthdays
 //
 //  Created by Irfan Lone on 11/2/15.
 //  Copyright © 2015 Irfan. All rights reserved.
 //
 
-#import "MyTableViewCell.h"
+#import "WSTableViewCell.h"
 
-@implementation MyTableViewCell
+@implementation WSTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code

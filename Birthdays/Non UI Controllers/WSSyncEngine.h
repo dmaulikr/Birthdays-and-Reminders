@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+FOUNDATION_EXPORT NSString * const kSDSyncEngineSyncCompletedNotificationName;
+
+
 typedef enum {
     SDObjectSynced = 0,
     SDObjectCreated,

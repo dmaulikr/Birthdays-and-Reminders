@@ -9,7 +9,6 @@
 #import "WSParseAPIClient.h"
 
 static NSString * const kSDFParseAPIBaseURLString = @"https://api.parse.com/1/";
-
 static NSString * const kSDFParseAPIApplicationId = @"ZXZJQAqUyVrq1HJel5DoOHquqxw1jqbfMumRQdib";
 static NSString * const kSDFParseAPIKey = @"RplMa0mTwS9oIldaaG3kvJbnqqMUIU4PZmv9UlEb";
 
@@ -46,8 +45,8 @@ static NSString * const kSDFParseAPIKey = @"RplMa0mTwS9oIldaaG3kvJbnqqMUIU4PZmv9
 }
 
 - (NSMutableURLRequest *)POSTRequestForClass:(NSString *)className parameters:(NSDictionary *)parameters {
-
-    NSString * urlstr = @"https://api.parse.com/1/classes/Birthday";
+    NSString * urlstr = [[NSString stringWithString:kSDFParseAPIBaseURLString] stringByAppendingString:[NSString stringWithFormat:@"classes/%@", className]];
+    NSLog(@"%@",urlstr);
     NSURL *url = [NSURL URLWithString:urlstr];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     request.HTTPMethod = @"POST";
@@ -94,7 +93,8 @@ static NSString * AFPropertyListStringFromParameters(NSDictionary *parameters) {
 
 - (NSMutableURLRequest *)DELETERequestForClass:(NSString *)className objectID:(NSString *)objectIdToDelete {
     
-    NSString * urlstr = @"https://api.parse.com/1/classes/Birthday/";
+    NSString * urlstr = [[NSString stringWithString:kSDFParseAPIBaseURLString] stringByAppendingString:[NSString stringWithFormat:@"classes/%@/", className]];
+    NSLog(@"%@",urlstr);
     urlstr = [urlstr stringByAppendingString:objectIdToDelete];
     NSURL *url = [NSURL URLWithString:urlstr];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
