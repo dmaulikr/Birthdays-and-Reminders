@@ -11,8 +11,6 @@
 		97DB39001BE738D9003CE087 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97DB38FE1BE738D9003CE087 /* Main.storyboard */; };
 		97DB39021BE738D9003CE087 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97DB39011BE738D9003CE087 /* Assets.xcassets */; };
 		97DB39051BE738D9003CE087 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97DB39031BE738D9003CE087 /* LaunchScreen.storyboard */; };
-		97E3E2BD1BF3170A00998D5A /* Birthday+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 97E3E2BA1BF3170A00998D5A /* Birthday+CoreDataProperties.m */; };
-		97E3E2BE1BF3170A00998D5A /* Birthday.m in Sources */ = {isa = PBXBuildFile; fileRef = 97E3E2BC1BF3170A00998D5A /* Birthday.m */; };
 		97FC122B1C712B69006EA533 /* WSTransport.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC122A1C712B69006EA533 /* WSTransport.m */; };
 		97FC12321C712BFC006EA533 /* WSCoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC122D1C712BFC006EA533 /* WSCoreDataController.m */; };
 		97FC12331C712BFC006EA533 /* WSParseAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC122F1C712BFC006EA533 /* WSParseAPIClient.m */; };
@@ -25,6 +23,8 @@
 		97FC12491C712E7C006EA533 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC12471C712E7C006EA533 /* main.m */; };
 		97FC124B1C712EEB006EA533 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 97FC124A1C712EEB006EA533 /* Info.plist */; };
 		97FC124E1C712F85006EA533 /* Birthdays.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 97FC124C1C712F85006EA533 /* Birthdays.xcdatamodeld */; };
+		97FC12561C714BA6006EA533 /* Birthday.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC12531C714BA6006EA533 /* Birthday.m */; };
+		97FC12571C714BA6006EA533 /* Birthday+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC12551C714BA6006EA533 /* Birthday+CoreDataProperties.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,10 +34,6 @@
 		97DB38FF1BE738D9003CE087 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		97DB39011BE738D9003CE087 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97DB39041BE738D9003CE087 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		97E3E2B91BF3170A00998D5A /* Birthday+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Birthday+CoreDataProperties.h"; path = "../Birthday+CoreDataProperties.h"; sourceTree = "<group>"; };
-		97E3E2BA1BF3170A00998D5A /* Birthday+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Birthday+CoreDataProperties.m"; path = "../Birthday+CoreDataProperties.m"; sourceTree = "<group>"; };
-		97E3E2BB1BF3170A00998D5A /* Birthday.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Birthday.h; path = ../Birthday.h; sourceTree = "<group>"; };
-		97E3E2BC1BF3170A00998D5A /* Birthday.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Birthday.m; path = ../Birthday.m; sourceTree = "<group>"; };
 		97FC12291C712B69006EA533 /* WSTransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WSTransport.h; path = "Non UI Controllers/WSTransport.h"; sourceTree = "<group>"; };
 		97FC122A1C712B69006EA533 /* WSTransport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WSTransport.m; path = "Non UI Controllers/WSTransport.m"; sourceTree = "<group>"; };
 		97FC122C1C712BFC006EA533 /* WSCoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WSCoreDataController.h; path = "Non UI Controllers/WSCoreDataController.h"; sourceTree = "<group>"; };
@@ -59,6 +55,10 @@
 		97FC12471C712E7C006EA533 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "Supporting Files/main.m"; sourceTree = "<group>"; };
 		97FC124A1C712EEB006EA533 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97FC124D1C712F85006EA533 /* Birthdays.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Birthdays.xcdatamodel; sourceTree = "<group>"; };
+		97FC12521C714BA6006EA533 /* Birthday.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Birthday.h; path = Model/Birthday.h; sourceTree = "<group>"; };
+		97FC12531C714BA6006EA533 /* Birthday.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Birthday.m; path = Model/Birthday.m; sourceTree = "<group>"; };
+		97FC12541C714BA6006EA533 /* Birthday+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Birthday+CoreDataProperties.h"; path = "Model/Birthday+CoreDataProperties.h"; sourceTree = "<group>"; };
+		97FC12551C714BA6006EA533 /* Birthday+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Birthday+CoreDataProperties.m"; path = "Model/Birthday+CoreDataProperties.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,10 +164,10 @@
 		97FC12451C712E3D006EA533 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				97E3E2B91BF3170A00998D5A /* Birthday+CoreDataProperties.h */,
-				97E3E2BA1BF3170A00998D5A /* Birthday+CoreDataProperties.m */,
-				97E3E2BB1BF3170A00998D5A /* Birthday.h */,
-				97E3E2BC1BF3170A00998D5A /* Birthday.m */,
+				97FC12521C714BA6006EA533 /* Birthday.h */,
+				97FC12531C714BA6006EA533 /* Birthday.m */,
+				97FC12541C714BA6006EA533 /* Birthday+CoreDataProperties.h */,
+				97FC12551C714BA6006EA533 /* Birthday+CoreDataProperties.m */,
 				97FC124C1C712F85006EA533 /* Birthdays.xcdatamodeld */,
 			);
 			name = Model;
@@ -244,7 +244,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				97E3E2BD1BF3170A00998D5A /* Birthday+CoreDataProperties.m in Sources */,
 				97FC12401C712CB5006EA533 /* WSTableViewCell.m in Sources */,
 				97DB38F41BE738D9003CE087 /* AppDelegate.m in Sources */,
 				97FC123F1C712CB5006EA533 /* MasterViewController.m in Sources */,
@@ -252,10 +251,11 @@
 				97FC12331C712BFC006EA533 /* WSParseAPIClient.m in Sources */,
 				97FC122B1C712B69006EA533 /* WSTransport.m in Sources */,
 				97FC12341C712BFC006EA533 /* WSSyncEngine.m in Sources */,
-				97E3E2BE1BF3170A00998D5A /* Birthday.m in Sources */,
 				97FC12321C712BFC006EA533 /* WSCoreDataController.m in Sources */,
 				97FC12441C712D51006EA533 /* Reachability.m in Sources */,
 				97FC123D1C712CB5006EA533 /* AddNewItemViewController.m in Sources */,
+				97FC12571C714BA6006EA533 /* Birthday+CoreDataProperties.m in Sources */,
+				97FC12561C714BA6006EA533 /* Birthday.m in Sources */,
 				97FC12491C712E7C006EA533 /* main.m in Sources */,
 				97FC123E1C712CB5006EA533 /* DetailViewController.m in Sources */,
 			);
