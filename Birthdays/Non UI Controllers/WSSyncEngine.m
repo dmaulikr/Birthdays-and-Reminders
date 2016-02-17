@@ -11,6 +11,7 @@
 #import "WSCoreDataController.h"
 #import "WSParseAPIClient.h"
 #import "WSTransport.h"
+#import "WSSyncEngine+Internal.h"
 
 
 NSString * const kSDSyncEngineInitialCompleteKey = @"SDSyncEngineInitialSyncCompleted";
@@ -35,6 +36,15 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
         sharedEngine = [[WSSyncEngine alloc] init];
     });
     return sharedEngine;
+}
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.opQueue = [[NSOperationQueue alloc] init];
+        self.opQueue.maxConcurrentOperationCount = 10;
+    }
+    return self;
 }
 
 - (void)startSync {
@@ -105,24 +115,29 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
 
 - (void)newManagedObjectWithClassName:(NSString *)className forRecord:(NSDictionary *)record {
     NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"Birthday" inManagedObjectContext:[[WSCoreDataController sharedInstance] backgroundManagedObjectContext]];
-    [record enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-        [self setValue:obj forKey:key forManagedObject:newManagedObject];
+    NSManagedObjectContext *managedObjectContext = [[WSCoreDataController sharedInstance] backgroundManagedObjectContext];
+    [managedObjectContext performBlockAndWait:^{
+        [record enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+            [self setValue:obj forKey:key forManagedObject:newManagedObject];
+        }];
+        [record setValue:[NSNumber numberWithInt:SDObjectSynced] forKey:@"syncStatus"];
     }];
-    [record setValue:[NSNumber numberWithInt:SDObjectSynced] forKey:@"syncStatus"];
 }
 
 - (void)updateManagedObject:(NSManagedObject *)managedObject withRecord:(NSDictionary *)record {
-    [record enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-        [self setValue:obj forKey:key forManagedObject:managedObject];
+    NSManagedObjectContext *managedObjectContext = [[WSCoreDataController sharedInstance] backgroundManagedObjectContext];
+    [managedObjectContext performBlockAndWait:^{
+        [record enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+            [self setValue:obj forKey:key forManagedObject:managedObject];
+        }];
     }];
 }
 
 - (void)setValue:(id)value forKey:(NSString *)key forManagedObject:(NSManagedObject *)managedObject {
     if ([key isEqualToString:@"createdAt"] || [key isEqualToString:@"updatedAt"]) {
-//        NSDate *date = [self dateUsingStringFromAPI:value];
-//        [managedObject setValue:date forKey:key];
+        
     } else if ([value isKindOfClass:[NSDictionary class]]) {
-        // handle if we have a object of this type
+    // handle if we have a object of this type
     } else if ([key isEqualToString:@"updatedAt"] || [key isEqualToString:@"createdAt"] || [key isEqualToString:@"image"] || [key isEqualToString:@"date"]) {
     } else if ([key isEqualToString:@"giftIdeas"]) {
         [managedObject setValue:value forKey:@"birthday"];
@@ -201,7 +216,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
     return results;
 }
 
-- (void)processJSONDataRecordsIntoCoreDataWithCompletionBlock:(void(^)())completion {
+- (void)processJSONDataRecordsIntoCoreDataWithCompletionBlock:(void(^)())completionBlock {
     NSManagedObjectContext *managedObjectContext = [[WSCoreDataController sharedInstance] backgroundManagedObjectContext];
 
     // Iterate over all registered classes to sync
@@ -264,19 +279,22 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
                 }
             }];
         }
-        
-        [managedObjectContext performBlockAndWait:^{
-            BOOL success = [managedObjectContext save:nil];
-            if (!success) {
-                NSLog(@"Unable to save context for class %@", className);
-            }
-        }];
-        [[WSCoreDataController sharedInstance] saveMasterContext];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [managedObjectContext performBlockAndWait:^{
+                    BOOL success = [managedObjectContext save:nil];
+                    if (!success) {
+                        NSLog(@"Unable to save context for class %@", className);
+                    }
+            }];
+            [[WSCoreDataController sharedInstance] saveMasterContext];
+        });
 
         // we are now done with the downloaded JSON responses so you can delete them to clean up after yourself,
         // then call your -executeSyncCompletedOperations to save off your master context and set the
         [self deleteJSONDataRecordsForClassWithName:@"Birthday"];
-        completion();
+        if (completionBlock) {
+            completionBlock();
+        }
     }
 }
 
@@ -308,17 +326,22 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
                     NSAssert(NO, @"Failed to write response data to server");
                     return;
                 }
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self processJSONDataRecordsIntoCoreDataWithCompletionBlock:^{
-                        // post local changes to server
-                        [self postLocalChangesToServerForClass:className withCompletionBlock:^{
-                            // Delete locally deleted objects on server
-                            [self deleteObjectsOnServerForClass:className withCompletionBlock:^{
-                                [self executeSyncCompletedOperations];
-                            }];
-                        }];
+                // Process the incoming response from server and save to coredata.
+                [self.opQueue addOperationWithBlock:^{
+                    [self processJSONDataRecordsIntoCoreDataWithCompletionBlock:nil];
+                }];
+                
+                // Push locally created objects to server
+                [self.opQueue addOperationWithBlock:^{
+                    [self postLocalChangesToServerForClass:className withCompletionBlock:nil];
+                }];
+                
+                // Delete locally deleted objects on server
+                [self.opQueue addOperationWithBlock:^{
+                    [self deleteObjectsOnServerForClass:className withCompletionBlock:^{
+                        [self executeSyncCompletedOperations];
                     }];
-                });
+                }];
             }];
         }];
     }
@@ -329,7 +352,9 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
     NSManagedObjectContext * moc = [[WSCoreDataController sharedInstance] masterManagedObjectContext];
     
     if ([newlyCreatedObjects count] < 1) {
-        completion();
+        if (completion) {
+            completion();
+        }
     }
     for (NSManagedObject * object in newlyCreatedObjects) {
         NSMutableDictionary * jsonObject = [self jsonForManagedObject:object];
@@ -360,7 +385,9 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
             } else {
                 NSLog(@"Failed to create object on server, Error : %@",responseObject.error);
             }
-            completion();
+            if (completion) {
+                completion();
+            }
         }];
     }
 }
@@ -369,7 +396,9 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
     NSArray * objectsToDelete = [self managedObjectsForClass:className withSyncStatus:SDObjectDeleted];
     NSManagedObjectContext * moc = [[WSCoreDataController sharedInstance] backgroundManagedObjectContext];
     if ([objectsToDelete count] < 1) {
-        completion();
+        if (completion) {
+            completion();
+        }
     }
     for (NSManagedObject * object in objectsToDelete) {
         
@@ -379,7 +408,10 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
         
         WSTransport * transport = [[WSTransport alloc] init];
         [transport retrieve:urlRequest completionBlock:^(BOOL success, WSTransportResponseObject *responseObject) {
-            if (success) {
+            
+            // " !responseObject.error " there could be object marked for deletion locally and doesnt exist on server.
+            // error would nil in that case and success = NO
+            if (success || !responseObject.error) {
                 // set the SDSyncStatus and objectID
                 [moc deleteObject:object];
                 if (object == [objectsToDelete lastObject]) {
@@ -388,7 +420,9 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
             } else {
                 NSLog(@"Failed to create object on server, Error : %@",responseObject.error);
             }
-            completion();
+            if (completion) {
+                completion();
+            }
         }];
     }
 }

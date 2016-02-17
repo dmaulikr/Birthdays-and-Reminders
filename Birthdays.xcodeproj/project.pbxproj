@@ -34,6 +34,7 @@
 		97DB38FF1BE738D9003CE087 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		97DB39011BE738D9003CE087 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97DB39041BE738D9003CE087 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		97E971F41C74369400AB76B9 /* WSSyncEngine+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "WSSyncEngine+Internal.h"; path = "Non UI Controllers/WSSyncEngine+Internal.h"; sourceTree = "<group>"; };
 		97FC12291C712B69006EA533 /* WSTransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WSTransport.h; path = "Non UI Controllers/WSTransport.h"; sourceTree = "<group>"; };
 		97FC122A1C712B69006EA533 /* WSTransport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WSTransport.m; path = "Non UI Controllers/WSTransport.m"; sourceTree = "<group>"; };
 		97FC122C1C712BFC006EA533 /* WSCoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WSCoreDataController.h; path = "Non UI Controllers/WSCoreDataController.h"; sourceTree = "<group>"; };
@@ -80,6 +81,7 @@
 				97FC122E1C712BFC006EA533 /* WSParseAPIClient.h */,
 				97FC122F1C712BFC006EA533 /* WSParseAPIClient.m */,
 				97FC12301C712BFC006EA533 /* WSSyncEngine.h */,
+				97E971F41C74369400AB76B9 /* WSSyncEngine+Internal.h */,
 				97FC12311C712BFC006EA533 /* WSSyncEngine.m */,
 				97FC12291C712B69006EA533 /* WSTransport.h */,
 				97FC122A1C712B69006EA533 /* WSTransport.m */,
