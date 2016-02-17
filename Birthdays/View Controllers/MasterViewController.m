@@ -127,7 +127,7 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSManagedObjectContext *moc = [[WSCoreDataController sharedInstance] backgroundManagedObjectContext];
+        NSManagedObjectContext *moc = [[WSCoreDataController sharedInstance] newManagedObjectContext];
         NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
         NSManagedObject *objectTODelete =[moc existingObjectWithID:object.objectID error:nil];
         NSString *objectIdToDeleteOnServer =[[objectTODelete valueForKey:@"objectId"] description];
@@ -139,10 +139,7 @@
         }
         NSError *error = nil;
         if (![moc save:&error]) {
-            // Replace this implementation with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
+            NSLog(@"Failed to save moc. Unresolved error %@, %@", error, [error userInfo]);
         }
     }
 }
