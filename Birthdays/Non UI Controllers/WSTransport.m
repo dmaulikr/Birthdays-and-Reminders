@@ -1,5 +1,5 @@
 //
-//  YZTransport.m
+//  WSTransport.m
 //  
 //
 //  Created by Irfan Lone on 1/12/15.
@@ -36,19 +36,16 @@
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
 
-    NSURLSessionUploadTask *uploadTask = [session uploadTaskWithRequest:urlRequest
-                                                               fromData:dataToUpload
-                                                      completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                                                          NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-                                                          WSTransportResponseObject *responseObject = [[WSTransportResponseObject alloc] initWithData:data response:httpResponse error:error];
-                                                          NSInteger responseStatusCode = httpResponse.statusCode;
-                                                          if (error == nil && (responseStatusCode >= 200 && responseStatusCode <= 299)) {
-                                                              completionBlock(YES, responseObject);
-                                                          } else {
-                                                              completionBlock(NO, responseObject);
-                                                          }
-                                                      }];
-    uploadTask.priority = NSURLSessionTaskPriorityHigh;
+    NSURLSessionUploadTask *uploadTask = [session uploadTaskWithRequest:urlRequest fromData:dataToUpload completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        WSTransportResponseObject *responseObject = [[WSTransportResponseObject alloc] initWithData:data response:httpResponse error:error];
+        NSInteger responseStatusCode = httpResponse.statusCode;
+        if (error == nil && (responseStatusCode >= 200 && responseStatusCode <= 299)) {
+            completionBlock(YES, responseObject);
+        } else {
+            completionBlock(NO, responseObject);
+        }
+    }];
     [uploadTask resume];
     [session finishTasksAndInvalidate];
 }
@@ -62,18 +59,16 @@
     }
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:urlRequest
-                                                completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                                                    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-                                                    WSTransportResponseObject *responseObject = [[WSTransportResponseObject alloc] initWithData:data response:httpResponse error:error];
-                                                    NSInteger responseStatusCode = httpResponse.statusCode;
-                                                    if (error == nil && (responseStatusCode >= 200 && responseStatusCode <= 299)) {
-                                                        completionBlock(YES, responseObject);
-                                                    } else {
-                                                        completionBlock(NO, responseObject);
-                                                    }
-                                                }];
-    dataTask.priority = NSURLSessionTaskPriorityHigh;
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        WSTransportResponseObject *responseObject = [[WSTransportResponseObject alloc] initWithData:data response:httpResponse error:error];
+        NSInteger responseStatusCode = httpResponse.statusCode;
+        if (error == nil && (responseStatusCode >= 200 && responseStatusCode <= 299)) {
+            completionBlock(YES, responseObject);
+        } else {
+            completionBlock(NO, responseObject);
+        }
+    }];
     [dataTask resume];
     [session finishTasksAndInvalidate];
 }

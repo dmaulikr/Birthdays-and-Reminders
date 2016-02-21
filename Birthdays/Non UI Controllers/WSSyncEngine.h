@@ -12,10 +12,10 @@ FOUNDATION_EXPORT NSString * const kSDSyncEngineSyncCompletedNotificationName;
 
 
 typedef enum {
-    SDObjectSynced = 0,
-    SDObjectCreated,
-    SDObjectDeleted,
-} SDObjectSyncStatus;
+    WSObjectSynced = 0,
+    WSObjectCreated,
+    WSObjectDeleted,
+} WSObjectSyncStatus;
 
 
 @interface WSSyncEngine : NSObject

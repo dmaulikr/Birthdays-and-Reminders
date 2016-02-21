@@ -135,7 +135,7 @@
         if (objectIdToDeleteOnServer == nil || [objectIdToDeleteOnServer  isEqual: @""]) {
             [moc deleteObject:objectTODelete];
         } else {
-            [objectTODelete setValue:[NSNumber numberWithInt:SDObjectDeleted] forKey:@"syncStatus"];
+            [objectTODelete setValue:[NSNumber numberWithInt:WSObjectDeleted] forKey:@"syncStatus"];
         }
         NSError *error = nil;
         if (![moc save:&error]) {
@@ -175,7 +175,7 @@
 
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
     
-    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"syncStatus != %d", SDObjectDeleted]];
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"syncStatus != %d", WSObjectDeleted]];
 
     
     // Edit the section name key path and cache name if appropriate.

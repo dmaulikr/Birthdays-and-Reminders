@@ -39,8 +39,7 @@
     [newManagedObject setValue:self.facebook.text forKey:@"facebook"];
     [newManagedObject setValue:self.birthday.text forKey:@"birthday"];
     [newManagedObject setValue:self.name.text forKey:@"name"];
-    [newManagedObject setValue:[NSNumber numberWithInt:SDObjectCreated] forKey:@"syncStatus"];
-
+    [newManagedObject setValue:[NSNumber numberWithInt:WSObjectCreated] forKey:@"syncStatus"];
     
     [moc performBlockAndWait:^{
         BOOL success = [moc save:nil];

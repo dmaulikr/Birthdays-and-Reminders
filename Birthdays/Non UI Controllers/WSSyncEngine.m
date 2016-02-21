@@ -120,7 +120,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
         [record enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
             [self setValue:obj forKey:key forManagedObject:newManagedObject];
         }];
-        [record setValue:[NSNumber numberWithInt:SDObjectSynced] forKey:@"syncStatus"];
+        [record setValue:[NSNumber numberWithInt:WSObjectSynced] forKey:@"syncStatus"];
     }];
 }
 
@@ -146,7 +146,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
     }
 }
 
-- (NSArray *)managedObjectsForClass:(NSString *)className withSyncStatus:(SDObjectSyncStatus)syncStatus {
+- (NSArray *)managedObjectsForClass:(NSString *)className withSyncStatus:(WSObjectSyncStatus)syncStatus {
     __block NSArray *results = nil;
     NSManagedObjectContext *managedObjectContext = [[WSCoreDataController sharedInstance] backgroundManagedObjectContext];
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Birthday"];
@@ -159,7 +159,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
     return results;
 }
 
-- (NSArray *)managedObjectsForClass:(NSString *)className sortedByKey:(NSString *)key usingArrayOfIds:(NSArray *)idArray inArrayOfIds:(BOOL)inIds withSyncStatus:(SDObjectSyncStatus)syncStatus {
+- (NSArray *)managedObjectsForClass:(NSString *)className sortedByKey:(NSString *)key usingArrayOfIds:(NSArray *)idArray inArrayOfIds:(BOOL)inIds withSyncStatus:(WSObjectSyncStatus)syncStatus {
     __block NSArray *results = nil;
     NSManagedObjectContext *managedObjectContext = [[WSCoreDataController sharedInstance] backgroundManagedObjectContext];
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Birthday"];
@@ -219,25 +219,18 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
 - (void)processJSONDataRecordsIntoCoreDataWithCompletionBlock:(void(^)())completionBlock {
     NSManagedObjectContext *managedObjectContext = [[WSCoreDataController sharedInstance] backgroundManagedObjectContext];
 
-    // Iterate over all registered classes to sync
     for (NSString *className in self.registeredClassesToSync) {
-        if (![self initialSyncComplete]) { // import all downloaded data to Core Data for initial sync
-
-            // If this is the initial sync then the logic is pretty simple, we will fetch the JSON data from disk
-            // for the class of the current iteration and create new NSManagedObjects for each record
+        if (![self initialSyncComplete]) {
+            // If case of initial sync, create new NSManagedObjects for each record
             NSDictionary *JSONDictionary = [self JSONDictionaryForClassWithName:@"Birthday"];
             NSArray *records = [JSONDictionary objectForKey:@"results"];
             for (NSDictionary *record in records) {
                 [self newManagedObjectWithClassName:@"Birthday" forRecord:record];
             }
         } else {
-            // Otherwise we need to do some more logic to determine if the record is new or has been updated.
-            // First get the downloaded records from the JSON response, verify there is at least one object in
-            // the data, and then fetch all records stored in Core Data whose objectId matches those from the JSON response.
+            // OtherWise first determine if the incoming object is new or an existing object
             NSArray *downloadedRecords = [self JSONDataRecordsForClass:className sortedByKey:@"objectId"];
-            
-            NSSortDescriptor *sortByName = [NSSortDescriptor sortDescriptorWithKey:@"objectId"
-                                                                         ascending:YES];
+            NSSortDescriptor *sortByName = [NSSortDescriptor sortDescriptorWithKey:@"objectId" ascending:YES];
             NSArray *sortDescriptors = [NSArray arrayWithObject:sortByName];
             NSArray *sortedArray = [downloadedRecords sortedArrayUsingDescriptors:sortDescriptors];
             NSLog(@"%@",sortedArray);
@@ -246,15 +239,12 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
 
                 NSArray *storedRecords = [self managedObjectsForClass:className sortedByKey:@"objectId" usingArrayOfIds:[downloadedRecords valueForKey:@"objectId"] inArrayOfIds:YES];
                 int currentIndex = 0;
-                
-                for (NSDictionary *record in downloadedRecords) {
+                for (NSDictionary *record in sortedArray) {
                     NSManagedObject *storedManagedObject = nil;
-                    
                     // Make sure we don't access an index that is out of bounds as we are iterating over both collections together
                     if ([storedRecords count] > currentIndex) {
                         storedManagedObject = [storedRecords objectAtIndex:currentIndex];
                     }
-                    
                     if ([[storedManagedObject valueForKey:@"objectId"] isEqualToString:[record valueForKey:@"objectId"]]) {
                         [self updateManagedObject:[storedRecords objectAtIndex:currentIndex] withRecord:record];
                         currentIndex++;
@@ -264,10 +254,9 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
                 }
             }
         }
-        
         NSArray *downloadedRecords = [self JSONDataRecordsForClass:className sortedByKey:@"objectId"];
         NSArray<NSManagedObject*> * objectsMarkedForDeletion = [NSArray array];
-        objectsMarkedForDeletion = [self managedObjectsForClass:@"Birthday" sortedByKey:@"objectId" usingArrayOfIds:[downloadedRecords valueForKey:@"objectId"] inArrayOfIds:NO withSyncStatus:SDObjectSynced];
+        objectsMarkedForDeletion = [self managedObjectsForClass:@"Birthday" sortedByKey:@"objectId" usingArrayOfIds:[downloadedRecords valueForKey:@"objectId"] inArrayOfIds:NO withSyncStatus:WSObjectSynced];
         
         for (NSManagedObject * itemToBeDeleted in objectsMarkedForDeletion) {
             [managedObjectContext performBlockAndWait:^{
@@ -288,9 +277,6 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
             }];
             [[WSCoreDataController sharedInstance] saveMasterContext];
         });
-
-        // we are now done with the downloaded JSON responses so you can delete them to clean up after yourself,
-        // then call your -executeSyncCompletedOperations to save off your master context and set the
         [self deleteJSONDataRecordsForClassWithName:@"Birthday"];
         if (completionBlock) {
             completionBlock();
@@ -331,7 +317,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
                     [self processJSONDataRecordsIntoCoreDataWithCompletionBlock:nil];
                 }];
                 
-                // Push locally created objects to server
+                // Push locally created new objects to server
                 [self.opQueue addOperationWithBlock:^{
                     [self postLocalChangesToServerForClass:className withCompletionBlock:nil];
                 }];
@@ -348,7 +334,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
 }
 
 - (void)postLocalChangesToServerForClass:(NSString*)className withCompletionBlock:(void(^)())completion {
-    NSArray * newlyCreatedObjects = [self managedObjectsForClass:className withSyncStatus:SDObjectCreated];
+    NSArray * newlyCreatedObjects = [self managedObjectsForClass:className withSyncStatus:WSObjectCreated];
     NSManagedObjectContext * moc = [[WSCoreDataController sharedInstance] masterManagedObjectContext];
     
     if ([newlyCreatedObjects count] < 1) {
@@ -371,7 +357,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
 
                 // set the SDSyncStatus and objectID
                 [moc performBlockAndWait:^{
-                    [object setValue:[NSNumber numberWithInt:SDObjectSynced] forKey:@"syncStatus"];
+                    [object setValue:[NSNumber numberWithInt:WSObjectSynced] forKey:@"syncStatus"];
                     [object setValue:responseDictionary[@"objectId"] forKey:@"objectId"];
                 }];
                 
@@ -393,7 +379,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
 }
 
 - (void)deleteObjectsOnServerForClass:(NSString*)className withCompletionBlock:(void(^)())completion {
-    NSArray * objectsToDelete = [self managedObjectsForClass:className withSyncStatus:SDObjectDeleted];
+    NSArray * objectsToDelete = [self managedObjectsForClass:className withSyncStatus:WSObjectDeleted];
     NSManagedObjectContext * moc = [[WSCoreDataController sharedInstance] backgroundManagedObjectContext];
     if ([objectsToDelete count] < 1) {
         if (completion) {
