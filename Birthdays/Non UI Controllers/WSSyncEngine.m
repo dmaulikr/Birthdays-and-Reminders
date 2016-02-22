@@ -313,19 +313,20 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
                     return;
                 }
                 // Process the incoming response from server and save to coredata.
+                __weak typeof(self) weakself = self;
                 [self.opQueue addOperationWithBlock:^{
-                    [self processJSONDataRecordsIntoCoreDataWithCompletionBlock:nil];
+                    [weakself processJSONDataRecordsIntoCoreDataWithCompletionBlock:nil];
                 }];
                 
                 // Push locally created new objects to server
                 [self.opQueue addOperationWithBlock:^{
-                    [self postLocalChangesToServerForClass:className withCompletionBlock:nil];
+                    [weakself postLocalChangesToServerForClass:className withCompletionBlock:nil];
                 }];
                 
                 // Delete locally deleted objects on server
                 [self.opQueue addOperationWithBlock:^{
-                    [self deleteObjectsOnServerForClass:className withCompletionBlock:^{
-                        [self executeSyncCompletedOperations];
+                    [weakself deleteObjectsOnServerForClass:className withCompletionBlock:^{
+                        [weakself executeSyncCompletedOperations];
                     }];
                 }];
             }];
